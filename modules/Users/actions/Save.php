@@ -15,7 +15,7 @@ class Users_Save_Action extends Vtiger_Save_Action
 	{
 		$moduleName = $request->getModule();
 		$record = $request->get('record');
-		$recordModel = Vtiger_Record_Model::getInstanceById($record, $moduleName);
+		$recordModel = $this->record ? $this->record : Vtiger_Record_Model::getInstanceById($record, $moduleName);
 		$currentUserModel = Users_Record_Model::getCurrentUserModel();
 
 		// Check for operation access.
@@ -53,6 +53,11 @@ class Users_Save_Action extends Vtiger_Save_Action
 		return $recordModel;
 	}
 
+	/**
+	 * Process
+	 * @param Vtiger_Request $request
+	 * @return boolean
+	 */
 	public function process(Vtiger_Request $request)
 	{
 		$result = Vtiger_Util_Helper::transformUploadedFiles($_FILES, true);
@@ -72,21 +77,21 @@ class Users_Save_Action extends Vtiger_Save_Action
 			$accessibleUsers = \App\Fields\Owner::getInstance('Calendar', $currentUserModel)->getAccessibleUsersForModule();
 
 			if ($sharedType == 'private') {
-				$calendarModuleModel->deleteSharedUsers($currentUserModel->id);
+				$calendarModuleModel->deleteSharedUsers($currentUserModel->getId());
 			} else if ($sharedType == 'public') {
 				$allUsers = $currentUserModel->getAll(true);
 				$accessibleUsers = array();
 				foreach ($allUsers as $id => $userModel) {
 					$accessibleUsers[$id] = $id;
 				}
-				$calendarModuleModel->deleteSharedUsers($currentUserModel->id);
-				$calendarModuleModel->insertSharedUsers($currentUserModel->id, array_keys($accessibleUsers));
+				$calendarModuleModel->deleteSharedUsers($currentUserModel->getId());
+				$calendarModuleModel->insertSharedUsers($currentUserModel->getId(), array_keys($accessibleUsers));
 			} else {
 				if (!empty($sharedIds)) {
-					$calendarModuleModel->deleteSharedUsers($currentUserModel->id);
-					$calendarModuleModel->insertSharedUsers($currentUserModel->id, $sharedIds);
+					$calendarModuleModel->deleteSharedUsers($currentUserModel->getId());
+					$calendarModuleModel->insertSharedUsers($currentUserModel->getId(), $sharedIds);
 				} else {
-					$calendarModuleModel->deleteSharedUsers($currentUserModel->id);
+					$calendarModuleModel->deleteSharedUsers($currentUserModel->getId());
 				}
 			}
 
