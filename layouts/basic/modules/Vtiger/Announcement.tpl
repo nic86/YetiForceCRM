@@ -13,7 +13,7 @@
 							<div class="modal-body">
 								{$ANNOUNCEMENT->get('description')}
 							</div>
-                            <div class="modal-footer">
+							<div class="modal-footer">
 								{if !$ANNOUNCEMENT->get('is_mandatory')}
 									<button type="button" class="btn btn-danger" data-type="0">
 										<span class="glyphicon glyphicon-time" aria-hidden="true"></span>&nbsp;
