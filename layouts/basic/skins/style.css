@@ -2962,7 +2962,8 @@ table.dataTable .form-control {
 .fc-center, .fc-left, .fc-right{
 	margin-bottom: 1em;
 }
-.calendarRightPanel {
+.calendarRightPanel,
+.paddingLR5{
 	padding-left: 5px;
 	padding-right: 5px;
 }
@@ -3086,7 +3087,8 @@ span[name=existingImages] img{
 .cursorDefault{
 	cursor: default !important;
 }
-.remindersNoticeContainer{
+.remindersNoticeContainer,
+.remindersNotificationContainer{
 	position: fixed;
 	right: -380px;
 	top: 109px;
@@ -3103,7 +3105,8 @@ span[name=existingImages] img{
 	transition: all 0.5s ease;
 	overflow-y: auto;
 }
-.remindersNoticeContainer.toggled{
+.remindersNoticeContainer.toggled,
+.remindersNotificationContainer.toggled{
 	right: 0px;
 }
 .remindersContent{
@@ -3116,7 +3119,8 @@ span[name=existingImages] img{
 .activityTypeIcon{
 	height: 20px;
 }
-.remindersNoticeContainer .panel{
+.remindersNoticeContainer .panel,
+.remindersNotificationContainer .panel{
 	margin-bottom: 10px;
 }
 .remindersNoticeContainer .panel-body{
@@ -5825,4 +5829,98 @@ select.form-control {
 .yetiforceDetailsLink{
 	font-size: 40px;
 	margin-right: 15px;
+}
+.modalRightSiteBar{
+	margin: 0;
+	width: 40%;
+	height: 100%;
+    right: 0px;
+    top: 0px;
+    position: fixed;
+    z-index: 1070;
+	overflow: hidden;
+}
+.modalRightSiteBar .modal-content{
+	height: 100%;
+	overflow: auto;
+}
+.modalRightSiteBar button.close{
+    position: absolute;
+    right: 10px;
+    z-index: 5;
+}
+.modalRightSiteBar .moduleIcon{
+	float: left;
+}
+.modalRightSiteBar .quickDetailWidget h4{
+    background-color: #eee;
+    padding: 4px 10px;
+}
+.modalRightSiteBar .listViewEntriesTable thead>tr>th{
+	padding: 2px;
+}
+.medium .multiImageListIcon{
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	border: 1px solid #fff;
+	vertical-align: top;
+	position: relative;
+	z-index: 1;
+}
+.detailViewContainer .detailViewTable .multiImageListIcon{
+	width: 48px;
+	height: 48px;
+	margin: 0;
+	border: 1px solid #fff;
+	vertical-align: top;
+	position: relative;
+	z-index: 1;
+}
+.contentImage:hover .imageFullModal{
+	display: inline-block !important;
+}
+.contentImage:hover .multiImageListIcon{
+	max-width: 160px;
+	max-height: 160px;
+	border: 1px solid #ccc;
+	width: auto;
+	height: auto;
+	margin: 32px 0 0 -80px;
+	white-space: nowrap;
+	position: absolute;
+	z-index: 3;
+}
+.contentImage{
+	width: 35px;
+	height: 32px;
+	vertical-align: top;
+	display: inline-block !important;
+}
+.detailViewContainer .detailViewTable .contentImage{
+	width: 48px;
+	height: 48px;
+	display: inline-block !important;
+}
+.multiImageContenDiv{
+	z-index: 1000;
+}
+.textOverflowEllipsis:hover{
+	overflow: initial;
+}
+.input-group-sm .input-group-addon.checkbox-addon{
+	padding: 4px 7px !important;
+}
+.input-group-sm .input-group-addon.checkbox-addon input[type="checkbox"]{
+	vertical-align: middle !important;
+}
+.remindersContent .notificationIcon{
+	font-size: 30px;
+	text-align: center;
+	padding: 7% 0 0 0;
+	color: white;
+}
+.remindersContent .notiContent{
+	background: #fff !important;
+	border-radius: 0 4px 4px 0;
 }
