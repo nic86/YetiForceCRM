@@ -9,7 +9,13 @@
  * Contributor(s): YetiForce.com
  * ********************************************************************************** */
 
+<<<<<<< HEAD
+$startTime = microtime(true);
 
+define('REQUEST_MODE', 'WebUI');
+=======
+
+>>>>>>> 73544361d... Added minor enhancements
 define('ROOT_DIRECTORY', __DIR__ !== DIRECTORY_SEPARATOR ? __DIR__ : '');
 
 require 'include/RequirementsValidation.php';
