@@ -10,11 +10,22 @@
 class Settings_CustomView_Index_View extends Settings_Vtiger_Index_View
 {
 
+<<<<<<< HEAD
+	public function preProcess(Vtiger_Request $request, $display = true)
+	{
+		parent::preProcess($request, false);
+		$viewer = $this->getViewer($request);
+		$viewer->assign('SUPPORTED_MODULE_MODELS', Settings_CustomView_Module_Model::getSupportedModules());
+	}
+
+	public function process(Vtiger_Request $request)
+=======
 	/**
 	 * Main process
 	 * @param \App\Request $request
 	 */
-	public function process(Vtiger_Request $request)
+	public function process(\App\Request $request)
+>>>>>>> 1069fe4ad... Improved panel with configuration of filters
 	{
 		$moduleName = $request->getModule();
 		$supportedModule = $request->get('sourceModule');

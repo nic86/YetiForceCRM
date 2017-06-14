@@ -1,0 +1,15 @@
+<?php
+return [
+<<<<<<< HEAD
+	'appVersion' => '1.0.000',
+	'patchVersion' => '2017.09.04',
+=======
+	'appVersion' => '4.0.379',
+	'patchVersion' => '2017.06.14',
+>>>>>>> 1069fe4ad... Improved panel with configuration of filters
+	'lib_mPDF' => '0.0.2',
+	'lib_roundcube' => '0.0.33',
+	'lib_PHPExcel' => '0.0.0',
+	'lib_AJAXChat' => '0.0.2',
+	'lib_gantt' => '0.0.0',
+];
