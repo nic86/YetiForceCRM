@@ -78,7 +78,7 @@ class Settings_Vtiger_Icons_Model
 	public static function getImageIcon()
 	{
 		$images = [];
-		$path = 'public_html' . DIRECTORY_SEPARATOR . Vtiger_Theme::getBaseThemePath() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR;
+		$path = Vtiger_Theme::getBaseThemePath() . DIRECTORY_SEPARATOR . 'images' . DIRECTORY_SEPARATOR;
 		$dir = new DirectoryIterator($path);
 		foreach ($dir as $fileinfo) {
 			$file = $fileinfo->getFilename();

@@ -1,5 +1,5 @@
 {strip}
-	{*<!-- {[The file is published on the basis of YetiForce Public License 2.0 that can be found in the following directory: licenses/License.html or yetiforce.com]} -->*}
+	{*<!-- {[The file is published on the basis of YetiForce Public License that can be found in the following directory: licenses/License.html]} --!>*}
     {assign var='count' value=0}
 	<div class="container-fluid bodyHeader noSpaces commonActionsContainer{if $LEFTPANELHIDE} menuOpen{/if}">
 		<div class="row noSpaces">
@@ -22,14 +22,14 @@
 											{assign var='singularLabel' value=$MODULEMODEL->getSingularLabelKey()}
 											{if $singularLabel == 'SINGLE_Calendar'}
 												{assign var='singularLabel' value='LBL_EVENT_OR_TASK'}
-											{/if}
+											{/if}	
 											{if $quickCreateModule == '1'}
 												{if $count % 3 == 0}
 													<div class="">
 													{/if}
 													<div class="col-xs-4{if $count % 3 != 2} paddingRightZero{/if}">
 														<a id="menubar_quickCreate_{$NAME}" class="quickCreateModule list-group-item" data-name="{$NAME}" data-url="{$MODULEMODEL->getQuickCreateUrl()}" href="javascript:void(0)" title="{vtranslate($singularLabel,$NAME)}">
-															<span class="userIcon-{$NAME}"></span><span>{vtranslate($singularLabel,$NAME)}</span>
+															<span>{vtranslate($singularLabel,$NAME)}</span>
 														</a>
 													</div>
 													{if $count % 3 == 2}
@@ -51,6 +51,12 @@
 							<span class="badge hide">0</span>
 						</a>
 					{/if}
+<<<<<<< HEAD
+					{if $CHAT_ACTIVE}
+						<a class="btn btn-default btn-sm headerLinkChat popoverTooltip" data-content="{\App\Language::translate('LBL_CHAT')}" href="#">
+							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+						</a>
+=======
 					{if isset($CHAT_ENTRIES)}
 						<a class="btn btn-default btn-sm headerLinkChat popoverTooltip hidden-xs hidden-sm" data-content="{\App\Language::translate('LBL_CHAT')}" href="#">
 							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
@@ -66,25 +72,32 @@
 										{include file="Items.tpl"|@vtemplate_path:'Chat'}
 									</div>
 									<div class="modal-footer pinToDown">
-										<input type="text" class="form-control message" /><br />
-										<button type="button" class="btn btn-primary addMsg">{\App\Language::translate('LBL_ADD')}</button>
+                                        <input type="text" class="form-control message" /><br />
+										<button type="button" class="btn btn-primary addMsg">{\App\Language::translate('LBL_SEND_MESSAGE')}</button>
 									</div>
 								</div>
 							</div>
 						</div>
+>>>>>>> 34342932c... Improve responsive menu display
 					{/if}
 					{if $REMINDER_ACTIVE}
-						<a class="btn btn-default btn-sm isBadge remindersNotice popoverTooltip {if AppConfig::module('Calendar', 'AUTO_REFRESH_REMINDERS')}autoRefreshing{/if}" data-content="{\App\Language::translate('LBL_REMINDER')}" href="#">
+						<a class="btn btn-default btn-sm isBadge remindersNotice popoverTooltip {if AppConfig::module('Calendar', 'AUTO_REFRESH_REMINDERS')}autoRefreshing{/if} hidden-xs hidden-sm" data-content="{\App\Language::translate('LBL_REMINDER')}" href="#">
 							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
 							<span class="badge bgDanger hide">0</span>
 						</a>
 					{/if}
+<<<<<<< HEAD
+					<a class="btn btn-default btn-sm showHistoryBtn popoverTooltip dropdownMenu" data-content="{vtranslate('LBL_PAGES_HISTORY')}" href="#">
+						<i class="fa fa-history" aria-hidden="true"></i>
+					</a>
+=======
 					{if AppConfig::performance('BROWSING_HISTORY_WORKING')}
-						<a class="btn btn-default btn-sm showHistoryBtn popoverTooltip dropdownMenu" data-content="{vtranslate('LBL_PAGES_HISTORY')}" href="#">
+						<a class="btn btn-default btn-sm showHistoryBtn popoverTooltip dropdownMenu hidden-xs hidden-sm" data-content="{vtranslate('LBL_PAGES_HISTORY')}" href="#">
 							<i class="fa fa-history" aria-hidden="true"></i>
 						</a>
 						{include file='BrowsingHistory.tpl'|@vtemplate_path:$MODULE}
 					{/if}
+>>>>>>> 34342932c... Improve responsive menu display
 					{foreach key=index item=obj from=$MENU_HEADER_LINKS}
 						{if $obj->linktype == 'HEADERLINK'}
 							{assign var="HREF" value='#'}
@@ -96,12 +109,21 @@
 							{if !empty($LINK)}
 								{assign var="HREF" value=$LINK}
 							{/if}
+<<<<<<< HEAD
+							<a class="btn btn-sm popoverTooltip {if $obj->getClassName()|strrpos:"btn-" === false}btn-default {$obj->getClassName()}{else}{$obj->getClassName()}{/if} {if !empty($CHILD_LINKS)}dropdownMenu{/if}" data-content="{\App\Language::translate($TITLE)}" href="{$HREF}"
+							   {if isset($obj->linkdata) && $obj->linkdata && is_array($obj->linkdata)}
+								   {foreach item=DATA_VALUE key=DATA_NAME from=$obj->linkdata}
+									   data-{$DATA_NAME}="{$DATA_VALUE}" 
+								   {/foreach}
+							   {/if}>
+=======
 							<a class="btn btn-sm popoverTooltip {if $obj->getClassName()|strrpos:"btn-" === false}btn-default {$obj->getClassName()}{else}{$obj->getClassName()}{/if} {if !empty($CHILD_LINKS)}dropdownMenu{/if} hidden-xs hidden-sm" data-content="{\App\Language::translate($TITLE)}" href="{$HREF}"
 							    {if isset($obj->linkdata) && $obj->linkdata && is_array($obj->linkdata)}
 								    {foreach item=DATA_VALUE key=DATA_NAME from=$obj->linkdata}
 									    data-{$DATA_NAME}="{$DATA_VALUE}"
 								    {/foreach}
 							    {/if}>
+>>>>>>> 34342932c... Improve responsive menu display
 								{if $GLYPHICON}
 									<span class="{$GLYPHICON}" aria-hidden="true"></span>
 								{/if}
@@ -125,11 +147,19 @@
 											{/if}
 											<li>
 												<a target="{$obj->target}" id="menubar_item_right_{Vtiger_Util_Helper::replaceSpaceWithUnderScores($label)}" {if $label=='Switch to old look'}switchLook{/if} href="{$href}" {$onclick}
+<<<<<<< HEAD
+												   {if $obj->linkdata && is_array($obj->linkdata)}
+													   {foreach item=DATA_VALUE key=DATA_NAME from=$obj->linkdata}
+														   data-{$DATA_NAME}="{$DATA_VALUE}" 
+													   {/foreach}
+												   {/if}>{vtranslate($label,$MODULE)}</a>
+=======
 												{if $obj->linkdata && is_array($obj->linkdata)}
 													{foreach item=DATA_VALUE key=DATA_NAME from=$obj->linkdata}
 														data-{$DATA_NAME}="{$DATA_VALUE}"
 													{/foreach}
 												{/if}>{vtranslate($label,$MODULE)}</a>
+>>>>>>> 34342932c... Improve responsive menu display
 											</li>
 										{/if}
 									{/foreach}
