@@ -84,11 +84,22 @@ class OSSMailView_Record_Model extends Vtiger_Record_Model
 			if ($config['widget_limit'] !== '') {
 				$query->limit($config['widget_limit']);
 			}
+<<<<<<< HEAD
+
+			$result = $adb->pquery($query, $queryParams, true);
+
+			while ($row = $adb->fetch_array($result)) {
+=======
 			$dataReader = $query->createCommand()->query();
 			while ($row = $dataReader->read()) {
+>>>>>>> 463224590... Improved query
 				$from = $this->findRecordsById($row['from_id']);
 				$from = ($from && $from !== '') ? $from : $row['from_email'];
 				$to = $this->findRecordsById($row['to_id']);
+<<<<<<< HEAD
+				$to = ($to && $to != '') ? $to : $row['to_email'];
+				$content = vtlib\Functions::removeHtmlTags(['link', 'style', 'a', 'img', 'script', 'base'], vtlib\Functions::getHtmlOrPlainText($row['content']));
+=======
 				$to = ($to && $to !== '') ? $to : $row['to_email'];
 				$content = vtlib\Functions::getHtmlOrPlainText($row['content']);
 				if (\App\Privilege::isPermitted('OSSMailView', 'DetailView', $row['ossmailviewid'])) {
@@ -96,12 +107,13 @@ class OSSMailView_Record_Model extends Vtiger_Record_Model
 				} else {
 					$subject = $row['subject'];
 				}
+>>>>>>> 463224590... Improved query
 				$return[] = [
 					'id' => $row['ossmailviewid'],
 					'date' => $row['date'],
 					'firstLetter' => strtoupper(vtlib\Functions::textLength(trim(strip_tags($from)), 1, false)),
 					'subjectRaw' => $row['subject'],
-					'subject' => $subject,
+					'subject' => '<a href="index.php?module=OSSMailView&view=preview&record=' . $row['ossmailviewid'] . '" target="' . $config['target'] . '"> ' . $row['subject'] . '</a>',
 					'attachments' => $row['attachments_exist'],
 					'from' => $from,
 					'fromRaw' => $row['from_email'],
