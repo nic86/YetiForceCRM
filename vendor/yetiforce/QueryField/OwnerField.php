@@ -17,10 +17,10 @@ class OwnerField extends BaseField
 	 */
 	public function operatorE()
 	{
-		if (strpos($this->value, ',') === false) {
+		if (strpos($this->value, '##') === false) {
 			return [$this->getColumnName() => $this->value];
 		}
-		$values = explode(',', $this->value);
+		$values = explode('##', $this->value);
 		$condition = ['or'];
 		foreach ($values as $value) {
 			$condition[] = [$this->getColumnName() => $value];
@@ -34,10 +34,10 @@ class OwnerField extends BaseField
 	 */
 	public function operatorN()
 	{
-		if (strpos($this->value, ',') === false) {
+		if (strpos($this->value, '##') === false) {
 			return ['<>', $this->getColumnName(), $this->value];
 		}
-		$values = explode(',', $this->value);
+		$values = explode('##', $this->value);
 		$condition = ['or'];
 		foreach ($values as $value) {
 			$condition[] = ['<>', $this->getColumnName(), $value];

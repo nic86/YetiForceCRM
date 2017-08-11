@@ -1,4 +1,4 @@
-/* {[The file is published on the basis of YetiForce Public License that can be found in the following directory: licenses/License.html]} */
+/* {[The file is published on the basis of YetiForce Public License 2.0 that can be found in the following directory: licenses/License.html or yetiforce.com]} */
 jQuery.Class("YetiForce_ListSearch_Js", {
 	getInstance: function (container, noEvents) {
 		var module = app.getModuleName();
@@ -98,24 +98,7 @@ jQuery.Class("YetiForce_ListSearch_Js", {
 		listViewContainer.find('[data-trigger="listSearch"]').trigger("click");
 	},
 	registerDateListSearch: function (container) {
-		var thisInstance = this;
-		var listViewContainer = this.getContainer();
-		listViewContainer.find('.dateField').each(function (index, element) {
-			var dateElement = jQuery(element);
-			var customParams = {
-				calendars: 3,
-				mode: 'range',
-				className: 'rangeCalendar',
-				onChange: function (formated) {
-					dateElement.data('prevVal', dateElement.val());
-					dateElement.val(formated.join(','));
-				},
-				onHide: function (formated) {
-					dateElement.trigger(jQuery.Event('DatePicker.onHide'), formated);
-				}
-			}
-			app.registerEventForDatePickerFields(dateElement, false, customParams);
-		});
+		app.registerDateRangePickerFields(this.getContainer().find('.dateRangeField'));
 	},
 	registerTimeListSearch: function () {
 		app.registerEventForClockPicker();
@@ -182,7 +165,6 @@ jQuery.Class("YetiForce_ListSearch_Js", {
 			var searchContributorElement = jQuery(domElement);
 			var fieldInfo = searchContributorElement.data('fieldinfo');
 			var fieldName = searchContributorElement.attr('name');
-
 			var searchValue = searchContributorElement.val();
 
 			if (typeof searchValue == "object") {

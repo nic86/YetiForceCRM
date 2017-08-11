@@ -24,7 +24,7 @@ class SharedOwnerField extends BaseField
 		$baseTable = $focus->table_name;
 		$baseTableIndex = $focus->table_index;
 		$this->queryGenerator->addJoin(['INNER JOIN', 'u_#__crmentity_showners', "$baseTable.$baseTableIndex = u_#__crmentity_showners.crmid"]);
-		$values = explode(',', $this->value);
+		$values = explode('##', $this->value);
 		$condition = ['or'];
 		foreach ($values as $value) {
 			$condition[] = ['u_#__crmentity_showners.userid' => $value];
@@ -45,7 +45,7 @@ class SharedOwnerField extends BaseField
 		$baseTable = $focus->table_name;
 		$baseTableIndex = $focus->table_index;
 		$this->queryGenerator->addJoin(['INNER JOIN', 'u_#__crmentity_showners', "$baseTable.$baseTableIndex = u_#__crmentity_showners.crmid"]);
-		$values = explode(',', $this->value);
+		$values = explode('##', $this->value);
 		$condition = ['or'];
 		foreach ($values as $value) {
 			$condition[] = ['<>', 'u_#__crmentity_showners.userid', $value];
@@ -79,7 +79,7 @@ class SharedOwnerField extends BaseField
 		$baseTable = $focus->table_name;
 		$baseTableIndex = $focus->table_index;
 		$this->queryGenerator->addJoin(['INNER JOIN', 'u_#__crmentity_showners', "$baseTable.$baseTableIndex = u_#__crmentity_showners.crmid"]);
-		$values = explode(',', $this->value);
+		$values = explode('##', $this->value);
 		$condition = ['or'];
 		foreach ($values as $value) {
 			$condition[] = ['u_#__crmentity_showners.userid' => $value];
