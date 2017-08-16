@@ -66,7 +66,7 @@ class Functions
 		}
 		if ($onlyActive) {
 			$currencies = [];
-			foreach ($currencyInfo as $currencyId => &$currency) {
+			foreach ($currencyInfo as $currencyId => $currency) {
 				if ($currency['currency_status'] === 'Active') {
 					$currencies[$currencyId] = $currency;
 				}
@@ -360,7 +360,6 @@ class Functions
 			'"' => '&quot;',
 			"'" => '&#039;',
 		);
-		//if($encode && is_string($string))$string = html_entity_decode($string, ENT_QUOTES);
 		if ($encode && is_string($string)) {
 			$string = addslashes(str_replace(array_values($popup_toHtml), array_keys($popup_toHtml), $string));
 		}
@@ -473,11 +472,11 @@ class Functions
 		for ($i = 0; $i < $countResult; $i++) {
 			$comment = $adb->query_result($result, $i, 'commentcontent');
 			if ($comment != '') {
-				$commentlist .= '<br><br>' . $comment;
+				$commentlist .= '<br /><br />' . $comment;
 			}
 		}
 		if ($commentlist != '')
-			$commentlist = '<br><br>' . \App\Language::translate("The comments are", $moduleName) . ' : ' . $commentlist;
+			$commentlist = '<br /><br />' . \App\Language::translate("The comments are", $moduleName) . ' : ' . $commentlist;
 		return $commentlist;
 	}
 
@@ -624,28 +623,28 @@ class Functions
 		$years = ((int) $timeMinutesRange) / (60 * 24 * 365);
 		$years = floor($years);
 		if (!empty($years)) {
-			$short[] = $years == 1 ? $years . vtranslate('LBL_Y') : $years . vtranslate('LBL_YRS');
-			$full[] = $years == 1 ? $years . vtranslate('LBL_YEAR') : $years . vtranslate('LBL_YEARS');
+			$short[] = $years == 1 ? $years . \App\Language::translate('LBL_Y') : $years . \App\Language::translate('LBL_YRS');
+			$full[] = $years == 1 ? $years . \App\Language::translate('LBL_YEAR') : $years . \App\Language::translate('LBL_YEARS');
 		}
 		$days = self::myBcmod(($timeMinutesRange), (60 * 24 * 365));
 		$days = ($days) / (24 * 60);
 		$days = floor($days);
 		if (!empty($days)) {
-			$short[] = $days . vtranslate('LBL_D');
-			$full[] = $days == 1 ? $days . vtranslate('LBL_DAY') : $days . vtranslate('LBL_DAYS');
+			$short[] = $days . \App\Language::translate('LBL_D');
+			$full[] = $days == 1 ? $days . \App\Language::translate('LBL_DAY') : $days . \App\Language::translate('LBL_DAYS');
 		}
 		$hours = self::myBcmod(($timeMinutesRange), (24 * 60));
 		$hours = ($hours) / (60);
 		$hours = floor($hours);
 		if (!empty($hours)) {
-			$short[] = $hours . vtranslate('LBL_H');
-			$full[] = $hours == 1 ? $hours . vtranslate('LBL_HOUR') : $hours . vtranslate('LBL_HOURS');
+			$short[] = $hours . \App\Language::translate('LBL_H');
+			$full[] = $hours == 1 ? $hours . \App\Language::translate('LBL_HOUR') : $hours . \App\Language::translate('LBL_HOURS');
 		}
 		$minutes = self::myBcmod(($timeMinutesRange), (60));
 		$minutes = floor($minutes);
 		if (!empty($timeMinutesRange) || $showEmptyValue) {
-			$short[] = $minutes . vtranslate('LBL_M');
-			$full[] = $minutes == 1 ? $minutes . vtranslate('LBL_MINUTE') : $minutes . vtranslate('LBL_MINUTES');
+			$short[] = $minutes . \App\Language::translate('LBL_M');
+			$full[] = $minutes == 1 ? $minutes . \App\Language::translate('LBL_MINUTE') : $minutes . \App\Language::translate('LBL_MINUTES');
 		}
 
 		return [
@@ -655,14 +654,14 @@ class Functions
 	}
 
 	/**
-	 * myBcmod - get modulus (substitute for bcmod) 
-	 * string my_bcmod ( string left_operand, int modulus ) 
-	 * left_operand can be really big, but be carefull with modulus :( 
-	 * by Andrius Baranauskas and Laurynas Butkus :) Vilnius, Lithuania 
+	 * myBcmod - get modulus (substitute for bcmod)
+	 * string my_bcmod ( string left_operand, int modulus )
+	 * left_operand can be really big, but be carefull with modulus :(
+	 * by Andrius Baranauskas and Laurynas Butkus :) Vilnius, Lithuania
 	 * */
 	public static function myBcmod($x, $y)
 	{
-		// how many numbers to take at once? carefull not to exceed (int) 
+		// how many numbers to take at once? carefull not to exceed (int)
 		$take = 5;
 		$mod = '';
 
@@ -693,7 +692,7 @@ class Functions
 
 	public static function throwNewException($e, $die = true, $tpl = 'OperationNotPermitted.tpl')
 	{
-		$message = is_string($e) ? $e : $e->getMessage();
+		$message = is_object($e) ? $e->getMessage() : $e;
 		if (\App\Config::$requestMode === 'API') {
 			throw new \APIException($message, 401);
 		}
@@ -706,6 +705,7 @@ class Functions
 				$trace = str_replace(ROOT_DIRECTORY . DIRECTORY_SEPARATOR, '', $e->getTraceAsString());
 			}
 			if (is_object($e)) {
+				$response->setHeader('HTTP/1.1 ' . $e->getCode() . ' ' . $e->getMessage());
 				$response->setError($e->getCode(), $e->getMessage(), $trace);
 			} else {
 				$response->setError('error', $message, $trace);
@@ -718,8 +718,10 @@ class Functions
 		}
 		if ($die) {
 			trigger_error(print_r($message, true), E_USER_ERROR);
-			if (is_object($e)) {
-				throw new $e;
+			if (is_object($message)) {
+				throw new $message;
+			} elseif (is_array($message)) {
+				throw new \Exception($message['message']);
 			} else {
 				throw new \Exception($message);
 			}
@@ -766,8 +768,8 @@ class Functions
 
 	public static function getHtmlOrPlainText($content)
 	{
-		if ($content != strip_tags($content)) {
-			$content = decode_html($content);
+		if ($content !== strip_tags($content)) {
+			$content = App\Purifier::decodeHtml($content);
 		} else {
 			$content = nl2br($content);
 		}
@@ -789,11 +791,12 @@ class Functions
 
 	public static function recurseDelete($src)
 	{
-		$rootDir = ROOT_DIRECTORY . DIRECTORY_SEPARATOR;
-		if (!file_exists($rootDir . $src))
+		$rootDir = strpos($src, ROOT_DIRECTORY) === 0 ? '' : ROOT_DIRECTORY . DIRECTORY_SEPARATOR;
+		if (!file_exists($rootDir . $src)) {
 			return;
+		}
 		$dirs = [];
-		@chmod($root_dir . $src, 0777);
+		@chmod($rootDir . $src, 0777);
 		$dirs[] = $rootDir . $src;
 		if (is_dir($src)) {
 			foreach ($iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($src, \RecursiveDirectoryIterator::SKIP_DOTS), \RecursiveIteratorIterator::SELF_FIRST) as $item) {
@@ -812,7 +815,7 @@ class Functions
 		}
 	}
 
-	public function recurseCopy($src, $dest, $delete = false)
+	public static function recurseCopy($src, $dest, $delete = false)
 	{
 		$rootDir = ROOT_DIRECTORY . DIRECTORY_SEPARATOR;
 		if (!file_exists($rootDir . $src)) {
@@ -950,7 +953,7 @@ class Functions
 	{
 		$allCurrencies = self::getAllCurrency(true);
 		foreach ($allCurrencies as $currency) {
-			if ($currency['defaultid'] === '-11') {
+			if ((int) $currency['defaultid'] === -11) {
 				return $currency;
 			}
 		}

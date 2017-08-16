@@ -46,7 +46,7 @@ class Vtiger_Widget_Model extends Vtiger_Base_Model
 	{
 		$position = $this->get('position');
 		if ($position) {
-			$position = \App\Json::decode(decode_html($position));
+			$position = \App\Json::decode(App\Purifier::decodeHtml($position));
 			return intval($position['col']);
 		}
 		return $default;
@@ -56,7 +56,7 @@ class Vtiger_Widget_Model extends Vtiger_Base_Model
 	{
 		$position = $this->get('position');
 		if ($position) {
-			$position = \App\Json::decode(decode_html($position));
+			$position = \App\Json::decode(App\Purifier::decodeHtml($position));
 			return intval($position['row']);
 		}
 		return $default;
@@ -68,7 +68,7 @@ class Vtiger_Widget_Model extends Vtiger_Base_Model
 	 */
 	public function getUrl()
 	{
-		$url = decode_html($this->get('linkurl')) . '&linkid=' . $this->get('linkid');
+		$url = App\Purifier::decodeHtml($this->get('linkurl')) . '&linkid=' . $this->get('linkid');
 		$widgetid = $this->has('widgetid') ? $this->get('widgetid') : $this->get('id');
 		$url .= '&widgetid=' . $widgetid . '&active=' . $this->get('active');
 
@@ -91,7 +91,7 @@ class Vtiger_Widget_Model extends Vtiger_Base_Model
 	{
 		$widgetName = $this->get('name');
 		if (empty($widgetName)) {
-			$linkUrl = decode_html($this->getUrl());
+			$linkUrl = App\Purifier::decodeHtml($this->getUrl());
 			preg_match('/name=[a-zA-Z]+/', $linkUrl, $matches);
 			$matches = explode('=', $matches[0]);
 			$widgetName = $matches[1];
