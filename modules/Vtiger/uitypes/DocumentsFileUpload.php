@@ -50,6 +50,11 @@ class Vtiger_DocumentsFileUpload_UIType extends Vtiger_Base_UIType
 		return $value;
 	}
 
+	public function getListViewDisplayValue($value, $record = false, $recordInstance = false, $rawText = false)
+    {
+        return $this->getDisplayValue($value, $record, $recordInstance, $rawText);
+    }
+
 	/**
 	 * Function to get the DB Insert Value, for the current field type with given User Value
 	 * @param mixed $value
