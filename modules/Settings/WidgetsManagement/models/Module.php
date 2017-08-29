@@ -306,7 +306,6 @@ class Settings_WidgetsManagement_Module_Model extends Settings_Vtiger_Module_Mod
 
 	public function addWidget($data, $moduleName, $addToUser = false)
 	{
-		\App\Log::trace("Entering Settings_WidgetsManagement_Module_Model::addWidget(" . $data . ", " . $moduleName . ") method ...");
 		$db = App\Db::getInstance();
 		$status = false;
 		$widgetWithLimit = self::getWidgetsWithLimit();
@@ -359,7 +358,6 @@ class Settings_WidgetsManagement_Module_Model extends Settings_Vtiger_Module_Mod
 			])->execute();
 			$widgetId = $db->getLastInsertID('vtiger_module_dashboard_widgets_id_seq');
 		}
-		\App\Log::trace("Exiting Settings_WidgetsManagement_Module_Model::addWidget() method ...");
 		return array('success' => true, 'id' => $templateId, 'wid' => $widgetId, 'status' => $status, 'text' => vtranslate('LBL_WIDGET_ADDED', 'Settings::WidgetsManagement'));
 	}
 

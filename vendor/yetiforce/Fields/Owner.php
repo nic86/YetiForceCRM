@@ -327,7 +327,7 @@ class Owner
 		}
 		$query .= ' order by groupname ASC';
 		$result = $db->pquery($query, $params);
-
+		$tempResult = [];
 		if ($addBlank === true) {
 			// Add in a blank row
 			$tempResult[''] = '';

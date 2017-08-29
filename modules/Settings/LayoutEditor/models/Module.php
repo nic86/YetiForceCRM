@@ -209,21 +209,24 @@ class Settings_LayoutEditor_Module_Model extends Vtiger_Module_Model
 
 		if ($fieldType == 'Picklist' || $fieldType == 'MultiSelectCombo') {
 			$pickListValues = $params['pickListValues'];
-			if (is_string($pickListValues))
+			if (is_string($pickListValues)) {
 				$pickListValues = [$pickListValues];
+			}
 			$fieldModel->setPicklistValues($pickListValues);
 		}
 		if ($fieldType == 'Related1M') {
-			if (!is_array($params['referenceModule']))
+			if (!is_array($params['referenceModule'])) {
 				$moduleList[] = $params['referenceModule'];
-			else
+			} else {
 				$moduleList = $params['referenceModule'];
+			}
 			$fieldModel->setRelatedModules($moduleList);
 			foreach ($moduleList as $module) {
 				$targetModule = vtlib\Module::getInstance($module);
 				$targetModule->setRelatedList($this, $moduleName, array('Add'), 'getDependentsList');
 			}
 		}
+		App\Cache::clear();
 		return $fieldModel;
 	}
 

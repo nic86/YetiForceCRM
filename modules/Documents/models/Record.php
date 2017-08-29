@@ -33,7 +33,7 @@ class Documents_Record_Model extends Vtiger_Record_Model
 		if ($this->get('filelocationtype') === 'I') {
 			$fileDetails = $this->getFileDetails();
 			if (!empty($fileDetails)) {
-				$savedFile = $fileDetails['path'] . $fileDetails['attachmentsid'] . '_' . $fileDetails['name'];
+				$savedFile = $fileDetails['path'] . $fileDetails['attachmentsid'];
 				if (file_exists($savedFile) && fopen($savedFile, 'r')) {
 					$returnValue = true;
 				}

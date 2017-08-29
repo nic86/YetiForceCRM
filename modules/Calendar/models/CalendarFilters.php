@@ -25,9 +25,8 @@ class Calendar_CalendarFilters_Model extends Vtiger_Base_Model
 		}
 		$dir = new DirectoryIterator($this->filterPath);
 		foreach ($dir as $fileinfo) {
-			if (!$fileinfo->isDot()) {
-				$name = $fileinfo->getFilename();
-				$name = rtrim($name, '.php');
+			if (!$fileinfo->isDot() && $fileinfo->getExtension() === 'php') {
+				$name = trim($fileinfo->getBasename('.php'));
 				$filterClassName = Vtiger_Loader::getComponentClassName('CalendarFilter', $name, 'Calendar');
 				$filterInstance = new $filterClassName();
 				if (method_exists($filterInstance, 'checkPermissions') && $filterInstance->checkPermissions()) {

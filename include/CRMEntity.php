@@ -276,10 +276,7 @@ class CRMEntity
 	 */
 	public function mark_deleted($id)
 	{
-		$current_user = vglobal('current_user');
-		$date_var = date("Y-m-d H:i:s");
-		$query = "UPDATE vtiger_crmentity set deleted=1,modifiedtime=?,modifiedby=? where crmid=?";
-		$this->db->pquery($query, array($this->db->formatDate($date_var, true), $current_user->id, $id), true, "Error marking record deleted: ");
+		\App\Db::getInstance()->createCommand()->update('vtiger_crmentity', ['deleted' => 1, 'modifiedtime' => date('Y-m-d H:i:s'), 'modifiedby' => \App\User::getCurrentUserId()], ['crmid' => $id])->execute();
 	}
 
 	/**
@@ -623,20 +620,22 @@ class CRMEntity
 		$db = PearDatabase::getInstance();
 		foreach ($withCrmid as $relcrmid) {
 			if ($withModule == 'Documents') {
-				$checkpresence = $db->pquery('SELECT crmid FROM vtiger_senotesrel WHERE crmid = ? AND notesid = ?', [$crmid, $relcrmid]);
+				$checkpresence = (new \App\Db\Query())->select(['crmid'])->from('vtiger_senotesrel')->where(['crmid' => $crmid, 'notesid' => $relcrmid])->exists();
 				// Relation already exists? No need to add again
-				if ($checkpresence && $db->getRowCount($checkpresence))
+				if ($checkpresence) {
 					continue;
+				}
+
 				\App\Db::getInstance()->createCommand()->insert('vtiger_senotesrel', [
 					'crmid' => $crmid,
 					'notesid' => $relcrmid
 				])->execute();
 			} else {
-				$checkpresence = $db->pquery('SELECT crmid FROM vtiger_crmentityrel WHERE crmid = ? AND module = ? AND relcrmid = ? AND relmodule = ?', [$crmid, $module, $relcrmid, $withModule]
-				);
+				$checkpresence = (new \App\Db\Query())->select(['crmid'])->from('vtiger_crmentityrel')->where(['crmid' => $crmid, 'module' => $module, 'relcrmid' => $relcrmid, 'relmodule' => $withModule])->exists();
 				// Relation already exists? No need to add again
-				if ($checkpresence && $db->getRowCount($checkpresence))
+				if ($checkpresence) {
 					continue;
+				}
 				\App\Db::getInstance()->createCommand()->insert('vtiger_crmentityrel', [
 					'crmid' => $crmid,
 					'module' => $module,
@@ -1406,18 +1405,22 @@ class CRMEntity
 	 * between module and this module
 	 */
 
-	public function setRelationTables($secmodule = false)
+	public function setRelationTables($secModule = false)
 	{
 		$relTables = [
 			'Documents' => [
 				'vtiger_senotesrel' => ['crmid', 'notesid'],
 				$this->table_name => $this->table_index
+			],
+			'OSSMailView' => [
+				'vtiger_ossmailview_relation' => ['crmid', 'ossmailviewid'],
+				$this->table_name => $this->table_index
 			]
 		];
-		if ($secmodule === false) {
+		if ($secModule === false) {
 			return $relTables;
 		}
-		return $relTables[$secmodule];
+		return $relTables[$secModule];
 	}
 
 	/**

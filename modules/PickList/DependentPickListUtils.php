@@ -157,41 +157,36 @@ class Vtiger_DependencyPicklist
 
 	static function getPicklistDependencyDatasource($module)
 	{
-		$adb = PearDatabase::getInstance();
-
-		$tabId = \App\Module::getModuleId($module);
-
-		$result = $adb->pquery('SELECT * FROM vtiger_picklist_dependency WHERE tabid=?', array($tabId));
-		$noofrows = $adb->num_rows($result);
-
-		$picklistDependencyDatasource = array();
-		for ($i = 0; $i < $noofrows; ++$i) {
-			$pickArray = array();
-			$sourceField = $adb->query_result($result, $i, 'sourcefield');
-			$targetField = $adb->query_result($result, $i, 'targetfield');
-			$sourceValue = decode_html($adb->query_result($result, $i, 'sourcevalue'));
-			$targetValues = decode_html($adb->query_result($result, $i, 'targetvalues'));
+		$query = (new \App\Db\Query())->from('vtiger_picklist_dependency')->where(['tabid' => $tabId]);
+		$dataReader = $query->createCommand()->query();
+		$picklistDependencyDatasource = [];
+		while ($row = $dataReader->read()) {
+			$pickArray = [];
+			$sourceField = $row['sourcefield'];
+			$targetField = $row['targetfield'];
+			$sourceValue = App\Purifier::decodeHtml($row['sourcevalue']);
+			$targetValues = App\Purifier::decodeHtml($row['targetvalues']);
 			$unserializedTargetValues = \App\Json::decode(html_entity_decode($targetValues));
-			$criteria = decode_html($adb->query_result($result, $i, 'criteria'));
+			$criteria = App\Purifier::decodeHtml($row['criteria']);
 			$unserializedCriteria = \App\Json::decode(html_entity_decode($criteria));
 
-			if (!empty($unserializedCriteria) && $unserializedCriteria['fieldname'] != null) {
-				$conditionValue = array(
-					"condition" => array($unserializedCriteria['fieldname'] => $unserializedCriteria['fieldvalues']),
-					"values" => $unserializedTargetValues
-				);
+			if (!empty($unserializedCriteria) && $unserializedCriteria['fieldname'] !== null) {
+				$conditionValue = [
+					'condition' => [$unserializedCriteria['fieldname'] => $unserializedCriteria['fieldvalues']],
+					'values' => $unserializedTargetValues
+				];
 				$picklistDependencyDatasource[$sourceField][$sourceValue][$targetField][] = $conditionValue;
 			} else {
 				$picklistDependencyDatasource[$sourceField][$sourceValue][$targetField] = $unserializedTargetValues;
 			}
 			if (empty($picklistDependencyDatasource[$sourceField]['__DEFAULT__'][$targetField])) {
 				foreach (App\Fields\Picklist::getPickListValues($targetField) as $picklistValue) {
-					$pickArray[] = decode_html($picklistValue);
+					$pickArray[] = App\Purifier::decodeHtml($picklistValue);
 				}
 				$picklistDependencyDatasource[$sourceField]['__DEFAULT__'][$targetField] = $pickArray;
 			}
 		}
-		return $picklistDependencyDatasource;
+		return($picklistDependencyDatasource);
 	}
 
 	static function getJSPicklistDependencyDatasource($module)

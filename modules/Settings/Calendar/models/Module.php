@@ -19,10 +19,7 @@ class Settings_Calendar_Module_Model extends Settings_Vtiger_Module_Model
 	 */
 	public static function getCalendarViewTypes()
 	{
-		$query = (new \App\Db\Query())->from('vtiger_calendar_default_activitytypes');
-		$dataReader = $query->createCommand()->query();
-		$calendarViewTypes = $dataReader->readAll();
-		return $calendarViewTypes;
+		return (new \App\Db\Query())->from('vtiger_calendar_default_activitytypes')->all();
 	}
 
 	/**
@@ -139,7 +136,6 @@ class Settings_Calendar_Module_Model extends Settings_Vtiger_Module_Model
 		foreach (self::getCalendarColorPicklist() as $picklistName) {
 			$picklistValues = Users_Colors_Model::getValuesFromField($picklistName);
 			foreach ($picklistValues as $picklistValue) {
-				$picklistValue['id'] = $picklistValue['value'];
 				$picklistValue['table'] = 'vtiger_' . $picklistName;
 				$picklistValue['field'] = $picklistName;
 				$calendarConfig[] = array_combine($keys, $picklistValue);

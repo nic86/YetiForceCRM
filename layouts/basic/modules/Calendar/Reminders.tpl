@@ -2,10 +2,10 @@
 	<style>
 	{if empty($COLOR_LIST)}	
 		{foreach item=ITEM from=Settings_Calendar_Module_Model::getCalendarConfig('colors')}
-			.borderColor{$ITEM['name']}{
+			.borderColor{$ITEM['label']}{
 				border-color: {$ITEM['value']};
 			}
-			.headingColor{$ITEM['name']}{
+			.headingColor{$ITEM['label']}{
 				background-color: {$ITEM['value']} !important;
 				border-color: {$ITEM['value']};
 			}
