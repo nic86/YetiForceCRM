@@ -1564,7 +1564,7 @@ class Base3 extends \App\Db\Importers\Base
 					'user_id' => $this->integer(10)->unsigned(),
 					'type' => $this->stringType(50),
 					'folder' => $this->stringType(100),
-					'uid' => $this->integer()->defaultValue(1),
+					'uid' => $this->integer()->defaultValue(0),
 				],
 				'index' => [
 					['mailfolders_user_id_idx', 'user_id'],

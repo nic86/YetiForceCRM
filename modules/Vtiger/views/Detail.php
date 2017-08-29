@@ -431,9 +431,9 @@ class Vtiger_Detail_View extends Vtiger_Index_View
 			$tplName = 'RecentActivitiesTimeLine.tpl';
 		}
 		if (!$request->get('skipHeader')) {
-			echo $viewer->view('RecentActivitiesHeader.tpl', $moduleName, 'true');
+			$viewer->view('RecentActivitiesHeader.tpl', $moduleName);
 		}
-		echo $viewer->view($tplName, $moduleName, 'true');
+		return $viewer->view($tplName, $moduleName, true);
 	}
 
 	/**

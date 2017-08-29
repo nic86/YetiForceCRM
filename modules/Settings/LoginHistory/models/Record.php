@@ -49,13 +49,14 @@ class Settings_LoginHistory_Record_Model extends Settings_Vtiger_Record_Model
 		switch ($fieldName) {
 			case 'login_time':
 			case 'logout_time':
-				if ($this->get($fieldName) !== '0000-00-00 00:00:00') {
-					return Vtiger_Datetime_UIType::getDateTimeValue($this->get($fieldName));
+				$value = $this->get($fieldName);
+				if ($value && $value !== '0000-00-00 00:00:00') {
+					return Vtiger_Datetime_UIType::getDateTimeValue($value);
 				} else {
-					return '---';
+					return '--';
 				}
 			case 'user_name':
-				return $this->getHtmlEncode($fieldName);
+				return $this->getForHtml($fieldName);
 			case 'status':
 				return App\Language::translate($this->get($fieldName), 'Settings::Vtiger');
 			default:
