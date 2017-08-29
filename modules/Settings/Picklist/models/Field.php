@@ -51,7 +51,7 @@ class Settings_Picklist_Field_Model extends Vtiger_Field_Model
 			$query .= ' GROUP BY picklistvalueid';
 		}
 		$result = $db->pquery($query, $roleIdList);
-		$pickListValues = array();
+		$pickListValues = [];
 		$num_rows = $db->num_rows($result);
 		for ($i = 0; $i < $num_rows; $i++) {
 			$rowData = $db->query_result_rowdata($result, $i);
@@ -62,7 +62,7 @@ class Settings_Picklist_Field_Model extends Vtiger_Field_Model
 				}
 			}
 			//Need to decode the picklist values twice which are saved from old ui
-			$pickListValues[] = decode_html(decode_html($rowData[$fieldName]));
+			$pickListValues[] = \App\Purifier::decodeHtml(\App\Purifier::decodeHtml($rowData[$fieldName]));
 		}
 		return $pickListValues;
 	}

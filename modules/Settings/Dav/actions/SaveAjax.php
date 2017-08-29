@@ -35,11 +35,11 @@ class Settings_Dav_SaveAjax_Action extends Settings_Vtiger_IndexAjax_View
 			$message = vtranslate('LBL_DUPLICATE_USER_SERVICES', $request->getModule(false));
 		}
 		$response = new Vtiger_Response();
-		$response->setResult(array(
+		$response->setResult([
 			'success' => $success,
 			'key' => $result,
 			'message' => $message
-		));
+		]);
 		$response->emit();
 	}
 
@@ -50,10 +50,10 @@ class Settings_Dav_SaveAjax_Action extends Settings_Vtiger_IndexAjax_View
 		$moduleModel = Settings_Dav_Module_Model::getInstance($qualifiedModuleName);
 		$result = $moduleModel->deleteKey($params);
 		$response = new Vtiger_Response();
-		$response->setResult(array(
+		$response->setResult([
 			'success' => true,
 			'message' => vtranslate('LBL_KEY_HAS_BEEN_REMOVED', $request->getModule(false))
-		));
+		]);
 		$response->emit();
 	}
 }
