@@ -52,19 +52,19 @@ class ModuleBasic
 	 */
 	public function initialize($valuemap)
 	{
-		$this->id = $valuemap['tabid'];
+		$this->id = (int) $valuemap['tabid'];
 		$this->name = $valuemap['name'];
 		$this->label = $valuemap['tablabel'];
 		$this->version = $valuemap['version'];
 
-		$this->presence = $valuemap['presence'];
+		$this->presence = (int) $valuemap['presence'];
 		$this->ownedby = $valuemap['ownedby'];
-		$this->tabsequence = $valuemap['tabsequence'];
+		$this->tabsequence = (int) $valuemap['tabsequence'];
 		$this->parent = $valuemap['parent'];
-		$this->customized = $valuemap['customized'];
-		$this->type = $valuemap['type'];
+		$this->customized = (int) $valuemap['customized'];
+		$this->type = (int) $valuemap['type'];
 
-		$this->isentitytype = $valuemap['isentitytype'];
+		$this->isentitytype = (int) $valuemap['isentitytype'];
 
 		if ($this->isentitytype || $this->name == 'Users') {
 			// Initialize other details too

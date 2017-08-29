@@ -226,11 +226,5 @@ function getReportFieldValue($report, $picklistArray, $dbField, $valueArray, $fi
 	if (!($fieldInfo['uitype'] == '19' && ($module == 'Documents'))) {
 		$fieldvalue = htmlentities($fieldvalue, ENT_QUOTES, $default_charset);
 	}
-	if ($fieldvalue !== '-' && $fieldvalue !== null && $fieldvalue !== '') {
-		switch ($fieldType) {
-			case 'double':
-				return (double) $fieldvalue;
-		}
-	}
 	return $fieldvalue;
 }

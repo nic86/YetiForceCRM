@@ -684,6 +684,9 @@ class Vtiger_Detail_View extends Vtiger_Index_View
 			$nextSortOrder = 'ASC';
 			$sortImage = 'glyphicon glyphicon-chevron-up';
 		}
+		if (is_numeric($relatedModuleName)) {
+ 			$relatedModuleName = vtlib\Functions::getModuleName($relatedModuleName);
+ 		}	
 		if (empty($orderBy) && empty($sortOrder)) {
 			if (is_numeric($relatedModuleName))
 				$relatedModuleName = vtlib\Functions::getModuleName($relatedModuleName);
@@ -691,6 +694,12 @@ class Vtiger_Detail_View extends Vtiger_Index_View
 			$orderBy = $relatedInstance->default_order_by;
 			$sortOrder = $relatedInstance->default_sort_order;
 		}
+		if (!Users_Privileges_Model::getCurrentUserPrivilegesModel()->hasModulePermission($request->getModule())) {
+ 			throw new \App\Exceptions\NoPermitted('LBL_PERMISSION_DENIED');
+		}
+ 		if (!\App\Privilege::isPermitted($relatedModuleName)) {
+ 			throw new \App\Exceptions\NoPermittedToRecord('LBL_NO_PERMISSIONS_FOR_THE_RECORD');
+ 		}
 		$parentRecordModel = Vtiger_Record_Model::getInstanceById($parentId, $moduleName);
 		$relationListView = Vtiger_RelationListView_Model::getInstance($parentRecordModel, $relatedModuleName);
 		$relationModel = $relationListView->getRelationModel();

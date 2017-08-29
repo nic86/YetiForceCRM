@@ -1866,7 +1866,7 @@ class ReportRun extends CRMEntity
 			}
 			$query .= ' ' . $this->getRelatedModulesQuery($module, $this->secondarymodule) .
 				getNonAdminAccessControlQuery($this->primarymodule, $current_user) .
-				' where vtiger_crmentity.deleted=0 and vtiger_leaddetails.converted=0';
+				' WHERE vtiger_crmentity.deleted=0 and vtiger_leaddetails.converted=0';
 		} else if ($module == 'Accounts') {
 			$query = 'from vtiger_account
 				inner join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_account.accountid';
@@ -1910,7 +1910,7 @@ class ReportRun extends CRMEntity
 			}
 			$query .= ' ' . $this->getRelatedModulesQuery($module, $this->secondarymodule) .
 				getNonAdminAccessControlQuery($this->primarymodule, $current_user) .
-				' where vtiger_crmentity.deleted=0 ';
+				' WHERE vtiger_crmentity.deleted=0 ';
 		} else if ($module == 'Contacts') {
 			$query = 'from vtiger_contactdetails
 				inner join vtiger_crmentity on vtiger_crmentity.crmid = vtiger_contactdetails.contactid';
@@ -1962,7 +1962,7 @@ class ReportRun extends CRMEntity
 			}
 			$query .= ' ' . $this->getRelatedModulesQuery($module, $this->secondarymodule) .
 				getNonAdminAccessControlQuery($this->primarymodule, $current_user) .
-				' where vtiger_crmentity.deleted=0';
+				' WHERE vtiger_crmentity.deleted=0';
 		}
 
 		//For this Product - we can related Accounts, Contacts (Also Leads)
@@ -2066,7 +2066,7 @@ class ReportRun extends CRMEntity
 			}
 			$query .= ' ' . $this->getRelatedModulesQuery($module, $this->secondarymodule) .
 				getNonAdminAccessControlQuery($this->primarymodule, $current_user) .
-				' where vtiger_crmentity.deleted=0 ';
+				' WHERE vtiger_crmentity.deleted=0 ';
 		} else if ($module == 'Calendar') {
 
 			$matrix = $this->queryPlanner->newDependencyMatrix();
@@ -2161,7 +2161,7 @@ class ReportRun extends CRMEntity
 			}
 			$query .= ' ' . $this->getRelatedModulesQuery($module, $this->secondarymodule) .
 				getNonAdminAccessControlQuery($this->primarymodule, $current_user) .
-				' where vtiger_crmentity.deleted=0';
+				' WHERE vtiger_crmentity.deleted=0';
 		} else if ($module == 'OSSTimeControl') {
 			$query = 'FROM vtiger_osstimecontrol
 			inner join vtiger_crmentity on vtiger_crmentity.crmid=vtiger_osstimecontrol.osstimecontrolid';
@@ -2259,15 +2259,24 @@ class ReportRun extends CRMEntity
 		if (isset($columnstotallist)) {
 			$columnstotalsql = implode(', ', $columnstotallist);
 		}
-		if ($stdfiltersql != '') {
-			$wheresql = ' and ' . $stdfiltersql;
-		}
-
-		if ($advfiltersql != '') {
-			$wheresql .= ' and ' . $advfiltersql;
-		}
-
 		$reportquery = $this->getReportsQuery($this->primarymodule, $type);
+		$wheresql = '';
+		if ($stdfiltersql != '' || $advfiltersql != '') {
+			if(strpos($reportquery, 'WHERE') !== false) {
+				$wheresql = ' AND ';
+			} else {
+				$wheresql = ' WHERE ';
+			}
+		}
+		if ($stdfiltersql != '') {
+			$wheresql .=  $stdfiltersql;
+		}
+		if ($advfiltersql != '') {
+			if ($stdfiltersql != '') {
+				$wheresql .= ' AND ';
+			}
+			$wheresql .=  $advfiltersql;
+		}
 
 		// If we don't have access to any columns, let us select one column and limit result to shown we have not results
 		// Fix for: http://trac.vtiger.com/cgi-bin/trac.cgi/ticket/4758 - Prasad

@@ -112,7 +112,7 @@ class Settings_DataAccess_Module_Model extends Vtiger_Module_Model
 					$optionalConditions[$optionalNum]['fieldname'] = $row['fieldname'];
 					$optionalConditions[$optionalNum]['comparator'] = $row['comparator'];
 					$optionalConditions[$optionalNum]['field_type'] = $row['field_type'];
-					if ($optionalConditions[$optionalNum]['field_type'] == 'multipicklist') {
+					if (in_array($optionalConditions[$optionalNum]['field_type'], ['multipicklist', 'owner', 'sharedOwner'])) {
 						$optionalConditions[$optionalNum]['val'] = explode('::', $row['val']);
 					} else {
 						$optionalConditions[$optionalNum]['val'] = $row['val'];
@@ -314,7 +314,7 @@ class Settings_DataAccess_Module_Model extends Vtiger_Module_Model
 		foreach ($ffs as $ff) {
 			if ($ff != '.' && $ff != '..') {
 				if (is_dir($dir . '/' . $ff)) {
-					$Files["$ff"] = self::listFolderFiles($dir . '/' . $ff);
+					$Files["$ff"] = self::listFolderFiles($dir . '/' . $ff, $prefix);
 				} else {
 					$Files[] = $prefix . self::$separator . str_replace('.php', "", $ff);
 				}

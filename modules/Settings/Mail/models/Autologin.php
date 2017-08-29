@@ -40,8 +40,7 @@ class Settings_Mail_Autologin_Model
 			foreach ($users as $user) {
 				$insertData [] = [$id, $user];
 			}
-			$db->createCommand()->batchInsert('roundcube_users_autologin', ['rcuser_id', 'crmuser_id'], $insertData)
-				->execute();
+			$db->createCommand()->batchInsert('roundcube_users_autologin', ['rcuser_id', 'crmuser_id'], $insertData)->execute();
 		}
 	}
 
