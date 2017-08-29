@@ -49,15 +49,14 @@ class VTTaskQueue
 	 */
 	public function getReadyTasks()
 	{
-		$adb = $this->adb;
 		$time = time();
-		$result = $adb->pquery('SELECT task_id, entity_id, task_contents FROM com_vtiger_workflowtask_queue WHERE do_after<?', array($time));
-		$it = new SqlResultIterator($adb, $result);
-		$arr = array();
-		foreach ($it as $row) {
-			$arr[] = array($row->task_id, $row->entity_id, $row->task_contents);
+		$query = (new \App\Db\Query())->select(['task_id', 'entity_id', 'task_contents'])->from('com_vtiger_workflowtask_queue')->andWhere(['<', 'do_after', $time]);
+		$arr = [];
+		$dataReader = $query->createCommand()->query();
+		while ($row = $dataReader->read()) {
+			$arr[] = array($row['task_id'], $row['entity_id'], $row['task_contents']);
 		}
-		$adb->pquery("delete from com_vtiger_workflowtask_queue where do_after<?", array($time));
+		\App\Db::getInstance()->createCommand()->delete('com_vtiger_workflowtask_queue', ['<', 'do_after', $time])->execute();
 		return $arr;
 	}
 }

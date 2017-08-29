@@ -46,13 +46,7 @@ class Events_Record_Model extends Calendar_Record_Model
 
 	public function getInvities()
 	{
-		$db = PearDatabase::getInstance();
-		$result = $db->pquery('SELECT * FROM u_yf_activity_invitation WHERE activityid=?', [(int) $this->getId()]);
-		$invitees = [];
-		while ($row = $db->getRow($result)) {
-			$invitees[] = $row;
-		}
-		return $invitees;
+		return (new \App\Db\Query())->from('u_#__activity_invitation')->where(['activityid' => (int) $this->getId()])->all();
 	}
 
 	static public function getInvitionStatus($status = false)

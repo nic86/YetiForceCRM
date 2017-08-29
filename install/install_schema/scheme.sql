@@ -6199,7 +6199,7 @@ CREATE TABLE `vtiger_links` (
 CREATE TABLE `vtiger_loginhistory` (
   `login_id` int(11) NOT NULL AUTO_INCREMENT,
   `user_name` varchar(32) DEFAULT NULL,
-  `user_ip` varchar(50) NOT NULL,
+  `user_ip` varchar(100) NOT NULL,
   `logout_time` timestamp NULL DEFAULT NULL,
   `login_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `status` varchar(25) DEFAULT NULL,
