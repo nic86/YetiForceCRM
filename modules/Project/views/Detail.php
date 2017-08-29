@@ -26,8 +26,9 @@ class Project_Detail_View extends Vtiger_Detail_View
 
 		$viewer = $this->getViewer($request);
 		$moduleModel = Vtiger_Module_Model::getInstance('OSSTimeControl');
-		if ($moduleModel)
+		if ($moduleModel) {
 			$data = $moduleModel->getTimeUsers($recordId, $moduleName);
+		}
 		$viewer->assign('MODULE_NAME', $moduleName);
 		$viewer->assign('DATA', $data);
 		$viewer->view('charts/ShowTimeProjectUsers.tpl', $moduleName);

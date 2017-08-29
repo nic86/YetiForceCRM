@@ -11,6 +11,17 @@
 
 class CustomView_Save_Action extends Vtiger_Action_Controller
 {
+	/**
+	 * Function to check permission
+	 * @param \App\Request $request
+	 * @throws \Exception\NoPermitted
+	 */
+	public function checkPermission(\App\Request $request)
+	{
+		if (!App\Privilege::isPermitted($request->get('source_module'), 'CreateCustomFilter')) {
+			throw new \Exception\NoPermitted('LBL_PERMISSION_DENIED');
+		}
+	}
 
 	public function process(Vtiger_Request $request)
 	{

@@ -50,7 +50,7 @@ class OSSPasswords_Save_Action extends Vtiger_Save_Action
 		//check if password was edited with hidden password
 		$properPassword = $recordModel->get('password');
 		// edit mode
-		if ($recordId != '' && $mode == 'edit') {
+		if (!$recordModel->isNew()) {
 			if ($properPassword == '**********') { // hidden password sent in edit mode, get the correct one
 				if ($config) { // when encryption is on
 					$sql = sprintf("SELECT AES_DECRYPT(`password`, '%s') AS pass FROM `vtiger_osspasswords` WHERE `osspasswordsid` = ?;", $config['key']);
@@ -70,7 +70,7 @@ class OSSPasswords_Save_Action extends Vtiger_Save_Action
 				$sql = "UPDATE `vtiger_osspasswords` SET `password` = AES_ENCRYPT(?,?) WHERE `osspasswordsid` = ?;";
 				$result = $adb->pquery($sql, array($properPassword, $config['key'], $recordId), true);
 			}
-		} else if ($recordId == '' && $mode == '') {
+		} else {
 			$recordModel->save();
 
 			// if encryption mode is on we will encrypt the password

@@ -457,6 +457,9 @@ class TextParser
 			return '';
 		}
 		$relatedId = $this->recordModel->get($fieldName);
+		if (empty($relatedId)) {
+ 			return '';
+ 		}
 		if ($relatedModule === 'Users') {
 			$userRecordModel = \Users_Privileges_Model::getInstanceById($relatedId);
 			$instance = static::getInstanceByModel($userRecordModel);

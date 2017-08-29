@@ -509,7 +509,12 @@ class ModuleBasic
 	public function deleteFromCRMEntity()
 	{
 		self::log(__METHOD__ . ' | Start');
-		$query = (new \App\Db\Query())->select(['crmid'])->from('vtiger_crmentity')->where(['setype' => $this->name]);
+		$deleteRecords = (new \App\Db\Query())->select(['crmid'])->from('vtiger_crmentity')->where(['setype' => $this->name, 'deleted' => 1])->column();
+ 		if ($deleteRecords) {
+ 			$this->removeRecordsFromTrash($deleteRecords);
+ 		}
+ 		$query = (new \App\Db\Query())->select(['crmid'])->from('vtiger_crmentity')->where(['setype' => $this->name, 'deleted' => 0]);
+
 		$dataReader = $query->createCommand()->query();
 		while ($id = $dataReader->readColumn(0)) {
 			$recordModel = \Vtiger_Record_Model::getInstanceById($id, $this->name);
@@ -518,6 +523,20 @@ class ModuleBasic
 		\App\Db::getInstance()->createCommand()->delete('vtiger_crmentity', ['setype' => $this->name])->execute();
 		self::log(__METHOD__ . ' | END');
 	}
+
+	/**
+ 	 * Function to remove records from trash
+ 	 * @param int[] $deletedRecords
+ 	 */
+ 	public function removeRecordsFromTrash($deletedRecords)
+ 	{
+ 		$recordsId = array_splice($deletedRecords, 0, 700);
+ 		$recycleBinModule = new \RecycleBin_Module_Model();
+ 		$recycleBinModule->deleteRecords($recordsId);
+ 		if ($deletedRecords) {
+ 			$this->removeRecordsFromTrash($deletedRecords);
+ 		}
+ 	}
 
 	/**
 	 * Function to remove row in vtiger_modentity_num table

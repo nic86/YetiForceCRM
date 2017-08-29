@@ -125,7 +125,7 @@ class OSSMailView_Record_Model extends Vtiger_Record_Model
 	public function findRecordsById($ids)
 	{
 		$return = false;
-		if (!empty($ids) && $ids != '0') {
+		if (!empty($ids)) {
 			$recordModelMailScanner = Vtiger_Record_Model::getCleanInstance('OSSMailScanner');
 			$config = $recordModelMailScanner->getConfig('email_list');
 			if (strpos($ids, ',')) {
@@ -134,9 +134,21 @@ class OSSMailView_Record_Model extends Vtiger_Record_Model
 				$idsArray[0] = $ids;
 			}
 			foreach ($idsArray as $id) {
-				$module = vtlib\Functions::getCRMRecordType($id);
-				$label = vtlib\Functions::getCRMRecordLabel($id);
-				$return .= '<a href="index.php?module=' . $module . '&view=Detail&record=' . $id . '" target="' . $config['target'] . '"> ' . $label . '</a>,';
+				$recordMetaData = \vtlib\Functions::getCRMRecordMetadata($id);
+				if (!$recordMetaData || $recordMetaData['deleted'] === 1) {
+					continue;
+				}
+				$module = $recordMetaData['setype'];
+				if ($module === 'Leads') {
+					$isExists = (new \App\Db\Query())->from('vtiger_leaddetails')->where(['leadid' => $id, 'converted' => 0])->exists();
+					if (!$isExists) {
+						continue;
+					}
+				}
+				if (\App\Privilege::isPermitted($module, 'DetailView', $id)) {
+					$label = \App\Record::getLabel($id);
+					$return .= '<a href="index.php?module=' . $module . '&view=Detail&record=' . $id . '" target="' . $config['target'] . '"> ' . $label . '</a>,';
+				}
 			}
 		}
 		return trim($return, ',');

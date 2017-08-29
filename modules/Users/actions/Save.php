@@ -44,54 +44,12 @@ class Users_Save_Action extends Vtiger_Save_Action
 	 */
 	protected function getRecordModelFromRequest(Vtiger_Request $request)
 	{
-		$moduleName = $request->getModule();
-		$recordId = $request->get('record');
-		$currentUserModel = Users_Record_Model::getCurrentUserModel();
-		if (!empty($recordId)) {
-			$recordModel = Vtiger_Record_Model::getInstanceById($recordId, $moduleName);
-			$modelData = $recordModel->getData();
-			$recordModel->set('id', $recordId);
-			$sharedType = $request->get('sharedtype');
-			if (!empty($sharedType))
-				$recordModel->set('calendarsharedtype', $request->get('sharedtype'));
-		} else {
-			$recordModel = Vtiger_Record_Model::getCleanInstance($moduleName);
-			$modelData = $recordModel->getData();
+		$recordModel = parent::getRecordModelFromRequest($request);
+		if ($recordModel->isNew()) {
+			$recordModel->set('user_name', $request->get('user_name', null));
+			$recordModel->set('user_password', $request->getRaw('user_password', null));
+			$recordModel->set('confirm_password', $request->getRaw('confirm_password', null));
 		}
-		unset($modelData['mode']);
-		foreach ($modelData as $fieldName => $value) {
-			if (!$request->has($fieldName)) {
-				continue;
-			}
-			$fieldValue = $request->get($fieldName, null);
-			if ($fieldName === 'is_admin') {
-				if (!$currentUserModel->isAdminUser() && (!$fieldValue)) {
-					$fieldValue = 'off';
-				} else if ($currentUserModel->isAdminUser() && ($fieldValue || $fieldValue === 'on')) {
-					$fieldValue = 'on';
-					$recordModel->set('is_owner', 1);
-				} else {
-					$fieldValue = 'off';
-					$recordModel->set('is_owner', 0);
-				}
-			}
-			if ($fieldValue !== null) {
-				if (!is_array($fieldValue)) {
-					$fieldValue = trim($fieldValue);
-				}
-				$recordModel->set($fieldName, $fieldValue);
-			}
-		}
-		$homePageComponents = $recordModel->getHomePageComponents();
-		$selectedHomePageComponents = $request->get('homepage_components', array());
-		foreach ($homePageComponents as $key => $value) {
-			if (in_array($key, $selectedHomePageComponents)) {
-				$request->setGlobal($key, $key);
-			} else {
-				$request->setGlobal($key, '');
-			}
-		}
-
 		return $recordModel;
 	}
 

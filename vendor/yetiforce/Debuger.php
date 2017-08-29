@@ -15,6 +15,7 @@ class Debuger
 {
 
 	protected static $debugBar;
+	const BASE_PATH_JAVASCRIPT = 'vendor/php-debugbar/src/DebugBar/Resources';
 
 	/**
 	 * Initiating debugging console
@@ -33,6 +34,14 @@ class Debuger
 		$debugbar->addCollector(new DataCollector\ExceptionsCollector());
 		return static::$debugBar = $debugbar;
 	}
+
+	/**
+	 * Function to get path of files javascript
+ 	 * @return string
+ 	 */
+ 	public static function getJavascriptPath(){
+ 		return Layout::getPublicUrl(self::BASE_PATH_JAVASCRIPT);
+ 	}
 
 	/**
 	 * Get Debuger instance
