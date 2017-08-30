@@ -202,6 +202,9 @@ class Install_Index_view extends Vtiger_View_Controller
 
 	public function Step7(Vtiger_Request $request)
 	{
+		AppConfig::iniSet('display_errors', 'On');
+		AppConfig::iniSet('max_execution_time', 0);
+		AppConfig::iniSet('max_input_time', 0);
 		$webuiInstance = new Vtiger_WebUI();
 		$isInstalled = $webuiInstance->isInstalled();
 		if ($isInstalled) {
