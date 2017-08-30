@@ -19,11 +19,7 @@ class Stats extends \App\SystemWarnings\Template
 	 */
 	public function process()
 	{
-		if (file_exists('cache/' . $this->getKey()) || \AppConfig::main('systemMode') === 'demo') {
-			$this->status = 1;
-		} else {
-			$this->status = 0;
-		}
+		$this->status = 1;
 	}
 
 	/**

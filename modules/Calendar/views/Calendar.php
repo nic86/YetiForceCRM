@@ -45,6 +45,7 @@ class Calendar_Calendar_View extends Vtiger_Index_View
 		$jsFileNames = array(
 			'~libraries/fullcalendar/moment.min.js',
 			'~libraries/fullcalendar/fullcalendar.js',
+			'~libraries/fullcalendar/it.js',
 			'modules.Calendar.resources.CalendarView',
 		);
 
