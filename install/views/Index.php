@@ -15,6 +15,11 @@ class Install_Index_view extends Vtiger_View_Controller
 	protected $debug = false;
 	protected $viewer;
 
+	public function checkPermission(Vtiger_Request $request)
+ 	{
+ 
+ 	}
+
 	public function loginRequired()
 	{
 		return false;
@@ -56,7 +61,6 @@ class Install_Index_view extends Vtiger_View_Controller
 
 	public function preProcess(Vtiger_Request $request, $display = true)
 	{
-		AppConfig::set('debug', 'LOG_TO_FILE', true);
 		date_default_timezone_set('UTC'); // to overcome the pre configuration settings
 		// Added to redirect to default module if already installed
 		$request->set('module', 'Install');
