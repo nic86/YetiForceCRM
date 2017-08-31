@@ -16,6 +16,12 @@ class Announcements_Module_Model extends Vtiger_Module_Model
 		if (AppRequest::get('view') == 'Login' || !$this->isActive()) {
 			return false;
 		}
+		$userPrivilegesModel = Users_Privileges_Model::getCurrentUserPrivilegesModel();
+		$permission = $userPrivilegesModel->hasModulePermission($this->getId());
+		if (!$permission) {
+			    return false;
+		}
+
 		$this->loadAnnouncements();
 		return !empty($this->announcements);
 	}
