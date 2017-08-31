@@ -68,8 +68,9 @@ function DataAccessConditions() {
 			var row = jQuery(this);
 			var fieldInfo = jQuery(row).find('.comparator-select option:selected').data('info');
 			var fieldType = fieldInfo.type;
+            var rowValue = jQuery('[name="val"]', row).val();
 
-			if (fieldType == 'email') {
+			if (fieldType == 'email' && rowValue != '') {
 				var emailInstance = new Vtiger_Email_Validator_Js();
 				emailInstance.setElement(jQuery(row).find('[name="val"]'));
 				var response = emailInstance.validate();
@@ -110,7 +111,7 @@ function DataAccessConditions() {
 
 					msgTab.push(fieldInfo.label + ' - ' + currencyValidatorInstance.getError());
 				}
-			} else if (fieldType == 'date' && (!betweenValue || betweenValue == 'undefined')) {
+			} else if (fieldType == 'date' && (!betweenValue || betweenValue == 'undefined') && rowValue != '') {
 				var dateValidatorInstance = new Vtiger_Date_Validator_Js();
 				dateValidatorInstance.setElement(jQuery(row).find('[name="val"]'));
 				var response = dateValidatorInstance.validate();
@@ -118,7 +119,7 @@ function DataAccessConditions() {
 					state = false;
 					msgTab.push(fieldInfo.label + ' - ' + dateValidatorInstance.getError());
 				}
-			} else if (fieldType == 'date' && betweenValue != 'undefined') {
+			} else if (fieldType == 'date' && betweenValue != 'undefined' && rowValue != '') {
 				if (jQuery('input.dateField').val() == '') {
 					state = false;
 					msgTab.push(fieldInfo.label + ' - ' + app.vtranslate("JS_PLEASE_ENTER_VALID_DATE"));
