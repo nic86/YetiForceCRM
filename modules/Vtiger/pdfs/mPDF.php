@@ -337,7 +337,8 @@ class Vtiger_mPDF_Pdf extends Vtiger_AbstractPDF_Pdf
 		$origLanguage = vglobal('default_language');
 		vglobal('default_language', $template->get('language'));
 
-		$pdf->parseParams($template->getParameters());
+		$parameters = $template->getParameters();
+		$pdf->parseParams($parameters);
 		$pdf->setHeader('Header', $template->getHeader());
 		$pdf->setFooter('Footer', $template->getFooter());
 		$html = $template->getBody();

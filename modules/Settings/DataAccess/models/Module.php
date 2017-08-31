@@ -410,7 +410,8 @@ class Settings_DataAccess_Module_Model extends Vtiger_Module_Model
 		foreach ($colorList as $row) {
 			$conditionResult = $conditions->checkConditions($row['dataaccessid'], $recordData, $recordModel);
 			if ($conditionResult['test'] === true) {
-				$data = reset(unserialize($row['data']));
+				$unserializedRow = unserialize($row['data']);
+				$data = reset($unserializedRow);
 				$return = [
 					'text' => $data['text'],
 					'background' => $data['bg']
