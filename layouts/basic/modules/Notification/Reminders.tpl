@@ -46,11 +46,17 @@
 							<div class="col-xs-10 paddingLRZero textOverflowEllipsis">
 								<strong class="">{\App\Language::translate($RECORD->getModule()->getField('smcreatorid')->get('label'),$MODULE_NAME)}: {$RECORD->getCreatorUser()}</strong>
 							</div>
-							<div class="col-xs-2 paddingLRZero">
-								<button type="button" class="btn btn-success btn-xs pull-right setAsMarked" title="{\App\Language::translate('LBL_MARK_AS_READ',$MODULE_NAME)}">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-								</button>
-							</div>
+                            <div class="col-xs-1 paddingLRZero">
+							    {assign var=RELATED_RECORD value=$RECORD->getRelatedRecord()}
+							    {if $RELATED_RECORD['id'] && \App\Record::isExists($RELATED_RECORD['id'])}
+							 	    <a class="btn btn-info btn-xs  glyphicon glyphicon-th-list" title="{\App\Language::translat    e('LBL_GO_TO_PREVIEW',$MODULE_NAME)}" href="index.php?module={$RELATED_RECORD['module']}&view=Detail&record={$RELATED_RECORD['i    d']}" style="top: 0px;right: 1px;"></a>
+							    {/if}
+						    </div>
+						    <div class="col-xs-1 paddingLRZero">
+							    <button type="button" class="btn btn-success btn-xs pull-right setAsMarked" title="{\App\Langua    ge::translate('LBL_MARK_AS_READ',$MODULE_NAME)}">
+								    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+							    </button>
+						    </div>
 						</div>
 					</div>
 				</div>
