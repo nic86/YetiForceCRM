@@ -694,7 +694,7 @@ class Functions
 	public static function throwNewException($e, $die = true, $tpl = 'OperationNotPermitted.tpl')
 	{
 		$message = is_string($e) ? $e : $e->getMessage();
-		if (REQUEST_MODE === 'API') {
+		if (\App\Config::$requestMode === 'API') {
 			throw new \APIException($message, 401);
 		}
 		$request = \AppRequest::init();

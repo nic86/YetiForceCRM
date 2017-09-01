@@ -12,7 +12,7 @@ chdir(dirname(__FILE__) . '/../');
  * Start the cron services configured.
  */
 include_once 'include/main/WebUI.php';
-
+\App\Config::$requestMode = 'Cron';
 Vtiger_Session::init();
 $authenticatedUserId = Vtiger_Session::get('authenticated_user_id');
 $appUniqueKey = Vtiger_Session::get('app_unique_key');
@@ -67,7 +67,7 @@ if (PHP_SAPI === 'cli' || $user || AppConfig::main('application_unique_key') ===
 			// Mark the status - running		
 			$cronTask->markRunning();
 			echo sprintf('%s | %s - Start task' . PHP_EOL, date('Y-m-d H:i:s'), $cronTask->getName());
-			$startTime = microtime(true);
+			$startTaskTime = microtime(true);
 
 			vtlib\Deprecated::checkFileAccess($cronTask->getHandlerFile());
 			ob_start();
@@ -75,7 +75,7 @@ if (PHP_SAPI === 'cli' || $user || AppConfig::main('application_unique_key') ===
 			$taskResponse = ob_get_contents();
 			ob_end_clean();
 
-			$taskTime = round(microtime(true) - $startTime, 2);
+			$taskTime = round(microtime(true) - $startTaskTime, 2);
 			if ($taskResponse != '') {
 				\App\Log::warning($cronTask->getName() . ' - The task returned a message:' . PHP_EOL . $taskResponse);
 				echo 'Task response:' . PHP_EOL . $taskResponse . PHP_EOL;
