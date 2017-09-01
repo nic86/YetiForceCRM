@@ -5924,3 +5924,9 @@ select.form-control {
 	background: #fff !important;
 	border-radius: 0 4px 4px 0;
 }
+.ps-scrollbar-y-rail{
+	display:none !important;
+}
+.slimScrollBar{
+	right: -7px !important;
+}
