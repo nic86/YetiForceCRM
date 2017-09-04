@@ -46,5 +46,5 @@ $SECURITY_CONFIG = [
 	/**
 	 * Content Security Policy
 	 */
-	'CSP_ACTIVE' => true,
+	'CSP_ACTIVE' => false,
 ];
