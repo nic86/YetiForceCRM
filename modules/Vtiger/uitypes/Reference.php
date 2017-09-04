@@ -86,7 +86,8 @@ class Vtiger_Reference_UIType extends Vtiger_Base_UIType
 				return $name;
 			}
 			$name = vtlib\Functions::textLength($name, $this->get('field')->get('maxlengthtext'));
-			$linkValue = "<a class='moduleColor_$referenceModuleName' href='index.php?module=$referenceModuleName&view=" . $referenceModule->getDetailViewName() . "&record=$value' title='" . App\Language::translate($referenceModuleName, $referenceModuleName) . "'>$name</a>";
+			$title=App\Language::translate($referenceModuleName, $referenceModuleName);
+			$linkValue ="<a class='btn btn-default btn-sm' role='button' href='index.php?module={$referenceModuleName}&view={$referenceModule->getDetailViewName()}&record={$value}' title='{$title}'><span class='glyphicon glyphicon-link' aria-hidden='true'></span></a>&nbsp;&nbsp;<span class='moduleColor_{$referenceModuleName}'>{$name}</span>";
 			return $linkValue;
 		}
 		return '';
