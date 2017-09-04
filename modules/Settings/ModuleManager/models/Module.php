@@ -131,7 +131,7 @@ class Settings_ModuleManager_Module_Model extends Vtiger_Module_Model
 		$field1->uitype = 2;
 		$field1->column = $field1->name;
 		$field1->columntype = 'string(255)';
-		$field1->typeofdata = 'V~M';
+		$field1->typeofdata = 'V~O';
 		$block->addField($field1);
 
 		$module->setEntityIdentifier($field1);
