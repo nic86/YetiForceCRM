@@ -8961,6 +8961,8 @@ CREATE TABLE `vtiger_users` (
   `date_modified` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `modified_user_id` varchar(36) DEFAULT NULL,
   `email1` varchar(100) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
+  `mobile` varchar(50) DEFAULT NULL,
   `status` varchar(25) DEFAULT NULL,
   `user_preferences` text,
   `tz` varchar(30) DEFAULT NULL,
