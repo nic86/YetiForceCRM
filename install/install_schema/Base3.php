@@ -342,6 +342,7 @@ class Base3 extends \App\Db\Importers\Base
 					'igdn_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -352,6 +353,7 @@ class Base3 extends \App\Db\Importers\Base
 					'igdnc_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -362,6 +364,7 @@ class Base3 extends \App\Db\Importers\Base
 					'igin_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -372,6 +375,7 @@ class Base3 extends \App\Db\Importers\Base
 					'igrn_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -382,6 +386,7 @@ class Base3 extends \App\Db\Importers\Base
 					'igrnc_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -392,6 +397,7 @@ class Base3 extends \App\Db\Importers\Base
 					'iidn_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -537,6 +543,7 @@ class Base3 extends \App\Db\Importers\Base
 					'ipreorder_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -547,6 +554,7 @@ class Base3 extends \App\Db\Importers\Base
 					'istdn_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -557,6 +565,7 @@ class Base3 extends \App\Db\Importers\Base
 					'istn_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -577,6 +586,7 @@ class Base3 extends \App\Db\Importers\Base
 					'istrn_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -587,6 +597,7 @@ class Base3 extends \App\Db\Importers\Base
 					'knowledgebase_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -937,6 +948,7 @@ class Base3 extends \App\Db\Importers\Base
 					'lin_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -1046,6 +1058,7 @@ class Base3 extends \App\Db\Importers\Base
 					'lout_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -1825,6 +1838,7 @@ class Base3 extends \App\Db\Importers\Base
 					'osstimecontrol_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'

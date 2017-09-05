@@ -714,7 +714,7 @@ class CustomView_Record_Model extends Vtiger_Base_Model
 					}
 					$advFilterVal = implode(",", $val);
 				}
-				$criteria['value'] = Vtiger_Util_Helper::toSafeHTML(App\Purifier::decodeHtml(str_replace('##', ',', $advFilterVal)));
+				$criteria['value'] = Vtiger_Util_Helper::toSafeHTML(\App\Purifier::decodeHtml(str_replace('##', ',', $advFilterVal)));
 				$criteria['column_condition'] = $relcriteriarow["column_condition"];
 
 				$groupId = $relcriteriarow['groupid'];

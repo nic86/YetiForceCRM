@@ -310,6 +310,7 @@ class Base4 extends \App\Db\Importers\Base
 					'reservations_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -481,6 +482,7 @@ class Base4 extends \App\Db\Importers\Base
 					'scalculations_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -859,6 +861,7 @@ class Base4 extends \App\Db\Importers\Base
 					'squoteenquiries_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -869,6 +872,7 @@ class Base4 extends \App\Db\Importers\Base
 					'squotes_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -879,6 +883,7 @@ class Base4 extends \App\Db\Importers\Base
 					'srecurringorders_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -889,6 +894,7 @@ class Base4 extends \App\Db\Importers\Base
 					'srequirementscards_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -909,6 +915,7 @@ class Base4 extends \App\Db\Importers\Base
 					'ssalesprocesses_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -939,6 +946,7 @@ class Base4 extends \App\Db\Importers\Base
 					'ssingleorders_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'
@@ -1019,6 +1027,7 @@ class Base4 extends \App\Db\Importers\Base
 					'storage_status' => $this->stringType(200)->notNull(),
 					'sortorderid' => $this->integer(),
 					'presence' => $this->integer()->notNull()->defaultValue(1),
+					'picklist_valueid' => $this->integer(11)->notNull()->defaultValue(0)
 				],
 				'engine' => 'InnoDB',
 				'charset' => 'utf8'

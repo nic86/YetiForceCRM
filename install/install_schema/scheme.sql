@@ -5584,6 +5584,7 @@ CREATE TABLE `vtiger_igdn_status` (
   `igdn_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`igdn_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5594,6 +5595,7 @@ CREATE TABLE `vtiger_igdnc_status` (
   `igdnc_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`igdnc_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5604,6 +5606,7 @@ CREATE TABLE `vtiger_igin_status` (
   `igin_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`igin_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5614,6 +5617,7 @@ CREATE TABLE `vtiger_igrn_status` (
   `igrn_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`igrn_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5624,6 +5628,7 @@ CREATE TABLE `vtiger_igrnc_status` (
   `igrnc_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`igrnc_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5634,6 +5639,7 @@ CREATE TABLE `vtiger_iidn_status` (
   `iidn_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`iidn_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5764,6 +5770,7 @@ CREATE TABLE `vtiger_ipreorder_status` (
   `ipreorder_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ipreorder_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5774,6 +5781,7 @@ CREATE TABLE `vtiger_istdn_status` (
   `istdn_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`istdn_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5784,6 +5792,7 @@ CREATE TABLE `vtiger_istn_status` (
   `istn_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`istn_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5804,6 +5813,7 @@ CREATE TABLE `vtiger_istrn_status` (
   `istrn_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`istrn_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -5814,6 +5824,7 @@ CREATE TABLE `vtiger_knowledgebase_status` (
   `knowledgebase_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`knowledgebase_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -5840,7 +5851,7 @@ CREATE TABLE `vtiger_language` (
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   KEY `prefix` (`prefix`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `vtiger_language_seq` */
 
@@ -6132,6 +6143,7 @@ CREATE TABLE `vtiger_lin_status` (
   `lin_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`lin_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -6233,6 +6245,7 @@ CREATE TABLE `vtiger_lout_status` (
   `lout_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`lout_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
@@ -6916,6 +6929,7 @@ CREATE TABLE `vtiger_osstimecontrol_status` (
   `osstimecontrol_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`osstimecontrol_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 
@@ -7136,7 +7150,7 @@ CREATE TABLE `vtiger_picklist` (
   `name` varchar(200) NOT NULL,
   PRIMARY KEY (`picklistid`),
   UNIQUE KEY `picklist_name_idx` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
 
 /*Table structure for table `vtiger_picklist_dependency` */
 
@@ -7882,6 +7896,7 @@ CREATE TABLE `vtiger_reservations_status` (
   `reservations_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`reservations_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
@@ -8028,6 +8043,7 @@ CREATE TABLE `vtiger_scalculations_status` (
   `scalculations_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`scalculations_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -8346,6 +8362,7 @@ CREATE TABLE `vtiger_squoteenquiries_status` (
   `squoteenquiries_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`squoteenquiries_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -8356,6 +8373,7 @@ CREATE TABLE `vtiger_squotes_status` (
   `squotes_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`squotes_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
@@ -8366,6 +8384,7 @@ CREATE TABLE `vtiger_srecurringorders_status` (
   `srecurringorders_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`srecurringorders_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
@@ -8376,6 +8395,7 @@ CREATE TABLE `vtiger_srequirementscards_status` (
   `srequirementscards_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`srequirementscards_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
@@ -8396,6 +8416,7 @@ CREATE TABLE `vtiger_ssalesprocesses_status` (
   `ssalesprocesses_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ssalesprocesses_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
@@ -8426,6 +8447,7 @@ CREATE TABLE `vtiger_ssingleorders_status` (
   `ssingleorders_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ssingleorders_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
@@ -8502,6 +8524,7 @@ CREATE TABLE `vtiger_storage_status` (
   `storage_status` varchar(200) NOT NULL,
   `sortorderid` int(11) DEFAULT NULL,
   `presence` int(11) NOT NULL DEFAULT '1',
+  `picklist_valueid` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`storage_statusid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
