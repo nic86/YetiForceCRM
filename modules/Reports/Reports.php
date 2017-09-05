@@ -488,7 +488,7 @@ class Reports extends CRMEntity
 	 */
 	public function getPriModuleColumnsList($module)
 	{
-		$allColumnsListByBlocks = & $this->getColumnsListbyBlock($module, array_keys($this->module_list[$module]), true);
+		$allColumnsListByBlocks = $this->getColumnsListbyBlock($module, array_keys($this->module_list[$module]), true);
 		foreach ($this->module_list[$module] as $key => $value) {
 			$temp = $allColumnsListByBlocks[$key];
 
