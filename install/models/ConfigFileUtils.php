@@ -118,6 +118,7 @@ class Install_ConfigFileUtils_Model
 			}
 			fclose($templateHandle);
 		}
+		clearstatcache();
 		if ($templateHandle && $includeHandle) {
 			return true;
 		}
