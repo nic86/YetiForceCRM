@@ -12,11 +12,35 @@
 class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 {
 
-	protected $relationModel = false;
-	protected $parentRecordModel = false;
-	protected $relatedModuleModel = false;
+	/**
+	 * Relation model instance
+	 * @var Vtiger_Relation_Model 
+	 */
+	protected $relationModel;
+
+	/**
+	 * Parent record model instance
+	 * @var Vtiger_Record_Model 
+	 */
+	protected $parentRecordModel;
+
+	/**
+	 * Related module model instance
+	 * @var Vtiger_Module_Model 
+	 */
+	protected $relatedModuleModel;
+
+	/**
+	 * Mandatory columns
+	 * @var array 
+	 */
 	protected $mandatoryColumns = [];
 
+	/**
+	 * Set relation model instance
+	 * @param Vtiger_Relation_Model $relation
+	 * @return $this
+	 */
 	public function setRelationModel($relation)
 	{
 		$this->relationModel = $relation;
@@ -24,7 +48,7 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 	}
 
 	/**
-	 * Get relation model
+	 * Get relation model instance
 	 * @return Vtiger_Relation_Model
 	 */
 	public function getRelationModel()
@@ -32,6 +56,11 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 		return $this->relationModel;
 	}
 
+	/**
+	 * Set parent record model instance
+	 * @param Vtiger_Record_Model $parentRecord
+	 * @return $this
+	 */
 	public function setParentRecordModel($parentRecord)
 	{
 		$this->parentRecordModel = $parentRecord;
@@ -39,7 +68,7 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 	}
 
 	/**
-	 * Get parent record model
+	 * Get parent record model instance
 	 * @return Vtiger_Record_Model
 	 */
 	public function getParentRecordModel()
@@ -47,6 +76,11 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 		return $this->parentRecordModel;
 	}
 
+	/**
+	 * Set related module model instance
+	 * @param Vtiger_Module_Model $relatedModuleModel
+	 * @return $this
+	 */
 	public function setRelatedModuleModel($relatedModuleModel)
 	{
 		$this->relatedModuleModel = $relatedModuleModel;
@@ -54,7 +88,7 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 	}
 
 	/**
-	 * Function that returns the relation's related module model
+	 * Get related module model instance
 	 * @return Vtiger_Module_Model
 	 */
 	public function getRelatedModuleModel()
@@ -363,7 +397,6 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 	 */
 	public function getRelatedTreeEntriesCount()
 	{
-		$db = PearDatabase::getInstance();
 		$recordId = $this->getParentRecordModel()->getId();
 		$relModuleId = $this->getRelatedModuleModel()->getId();
 		$treeViewModel = $this->getTreeViewModel();
@@ -429,8 +462,6 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 	public function getLinks()
 	{
 		$relationModel = $this->getRelationModel();
-		$actions = $relationModel->getActions();
-
 		$selectLinks = $this->getSelectRelationLinks();
 		foreach ($selectLinks as $selectLinkModel) {
 			$selectLinkModel->set('_selectRelation', true)->set('_module', $relationModel->getRelationModuleModel());
@@ -460,7 +491,7 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 		$selectLinkList = array(
 			array(
 				'linktype' => 'LISTVIEWBASIC',
-				'linklabel' => vtranslate('LBL_SELECT_RELATION', $relatedModel->getName()),
+				'linklabel' => \App\Language::translate('LBL_SELECT_RELATION', $relatedModel->getName()),
 				'linkurl' => '',
 				'linkicon' => '',
 			)
@@ -504,7 +535,7 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 			$addLinkList = [[
 				'linktype' => 'LISTVIEWBASIC',
 				// NOTE: $relatedModel->get('label') assuming it to be a module name - we need singular label for Add action.
-				//'linklabel' => vtranslate('LBL_ADD')." ".vtranslate('SINGLE_' . $relatedModel->getName(), $relatedModel->getName()),
+				//'linklabel' => \App\Language::translate('LBL_ADD')." ".vtranslate'SINGLE_' . $relatedModel->getName(), $relatedModel->getName()),
 				'linklabel' => App\Language::translate('LBL_ADD_RELATION'),
 				'linkurl' => $this->getCreateViewUrl(),
 				'linkqcs' => $relatedModel->isQuickCreateSupported(),
@@ -557,5 +588,24 @@ class Vtiger_RelationListView_Model extends Vtiger_Base_Model
 					'crmid' => $this->getParentRecordModel()->getId(),
 					'userid' => App\User::getCurrentUserId()])
 				->column();
+	}
+
+	/**
+	 * Set fileds
+	 * @param string|string[] $fields
+	 */
+	public function setFields($fields)
+	{
+		if (is_string($fields)) {
+			$fields = explode(',', $fields);
+		}
+		$relatedListFields = [];
+		foreach ($fields as $fieldName) {
+			$fieldModel = $this->relatedModuleModel->getFieldByName($fieldName);
+			if ($fieldModel) {
+				$relatedListFields[$fieldName] = $fieldModel;
+			}
+		}
+		$this->relationModel->set('QueryFields', $relatedListFields);
 	}
 }
