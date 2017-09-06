@@ -188,7 +188,7 @@ class Settings_LayoutEditor_Module_Model extends Vtiger_Module_Model
 		$typeofdata = $details['typeofdata'];
 		$dbType = $details['dbType'];
 
-		$quickCreate = in_array($moduleName, getInventoryModules()) ? 3 : 1;
+		$quickCreate = in_array($moduleName, getInventoryModules()) ? 3 : 2;
 
 		$fieldModel = new Settings_LayoutEditor_Field_Model();
 		$fieldModel->set('name', $columnName)
