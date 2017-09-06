@@ -133,9 +133,12 @@ class SMSNotifier_Mobyt_Provider implements SMSNotifier_ISMSProvider_Model
         $params['return_id']='1';
 
 		$serviceURL = $this->getServiceURL(self::SERVICE_SEND);
-		$httpClient = new Vtiger_Net_Client($serviceURL);
-		$response = $httpClient->doPost($params);
-		$responseLines = explode("\n", $response);
+		$patch = $serviceURL . '?'. http_build_query($params);
+		$responseLines = Requests::post($patch);
+
+		//$httpClient = new Vtiger_Net_Client($serviceURL);
+		//$response = $httpClient->doPost($params);
+		$responseLines = explode("\n", $responseLines->raw);
 
 		$results = array();
 		$i=0;
@@ -143,7 +146,7 @@ class SMSNotifier_Mobyt_Provider implements SMSNotifier_ISMSProvider_Model
 			$responseLine = trim($responseLine);
 			if (empty($responseLine))
 				continue;
-			$result = array('error' => false, 'statusmessage' => '');
+			$result = [];
 			if (preg_match("/KO (.*)/", $responseLine, $matches)) {
 				$result['error'] = true;
 				$result['to'] = $toNumbers[$i++];
@@ -155,7 +158,9 @@ class SMSNotifier_Mobyt_Provider implements SMSNotifier_ISMSProvider_Model
 				$result['to'] = $toNumbers[$i++];
 				$result['status'] = self::MSG_STATUS_PROCESSING;
 			}
-			$results[] = $result;
+			if(count($result)) {
+				$results[] = $result;
+			}
 		}
 		return $results;
 	}

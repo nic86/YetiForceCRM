@@ -45,30 +45,32 @@ class SMSNotifier extends SMSNotifierBase
 		}
 
 		$moduleName = 'SMSNotifier';
-		$focus = CRMEntity::getInstance($moduleName);
+		$recordModel = Vtiger_Record_Model::getCleanInstance($moduleName);
+		$recordModel->set('message', $message);
+		$recordModel->set('smsnotifier_status', 'PLL_UNDEFINED');
+		$recordModel->save();
+		if ($recordModel->getId()) {
+			$recordModel->isNew = false;
+			if ($linktoids !== false) {
 
-		$focus->column_fields['message'] = $message;
-		$focus->column_fields['assigned_user_id'] = $ownerid;
-		$focus->save($moduleName);
+				if ($linktoModule !== false) {
+							$recordModel->getEntity()->save_related_module($moduleName, $recordModel->getId(), $linktoModule, $linktoids);
+				} else {
+					// Link modulename not provided (linktoids can belong to mix of module so determine proper modulename)
+					$query = "SELECT setype,crmid FROM vtiger_crmentity WHERE crmid IN (%s)";
+					$query = sprintf($query, generateQuestionMarks($linktoids));
+					$linkidsetypes = $adb->pquery($query, [$linktoids]);
+					if ($linkidsetypes && $adb->num_rows($linkidsetypes)) {
+						while ($linkidsetypesrow = $adb->fetch_array($linkidsetypes)) {
 
-		if ($linktoids !== false) {
-
-			if ($linktoModule !== false) {
-				relateEntities($focus, $moduleName, $focus->id, $linktoModule, $linktoids);
-			} else {
-				// Link modulename not provided (linktoids can belong to mix of module so determine proper modulename)
-				$query = "SELECT setype,crmid FROM vtiger_crmentity WHERE crmid IN (%s)";
-				$query = sprintf($query, generateQuestionMarks($linktoids));
-				$linkidsetypes = $adb->pquery($query, [$linktoids]);
-				if ($linkidsetypes && $adb->num_rows($linkidsetypes)) {
-					while ($linkidsetypesrow = $adb->fetch_array($linkidsetypes)) {
-						relateEntities($focus, $moduleName, $focus->id, $linkidsetypesrow['setype'], $linkidsetypesrow['crmid']);
+							$recordModel->getEntity()->save_related_module($moduleName, $recordModel->getId(), $linkidsetypesrow['setype'], $linkidsetypesrow['crmid']);
+						}
 					}
 				}
 			}
 		}
 		$responses = self::fireSendSMS($message, $tonumbers);
-		$focus->processFireSendSMSResponse($responses);
+		return $recordModel->processFireSendSMSResponse($responses);
 	}
 
 	/**

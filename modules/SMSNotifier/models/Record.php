@@ -46,4 +46,35 @@ class SMSNotifier_Record_Model extends Vtiger_Record_Model
 		}
 		return $statusColor;
 	}
+
+	public function processFireSendSMSResponse($responses)
+	{
+
+		if (empty($responses))
+			return;
+
+		$adb = PearDatabase::getInstance();
+
+		foreach ($responses as $response) {
+			$responseID = '';
+			$responseStatus = '';
+			$responseStatusMessage = '';
+
+			$needlookup = 1;
+			if ($response['error']) {
+				$responseStatus = ISMSProvider::MSG_STATUS_FAILED;
+				$needlookup = 0;
+			} else {
+				$responseID = $response['id'];
+				$responseStatus = $response['status'];
+			}
+
+			if (isset($response['statusmessage'])) {
+				$responseStatusMessage = $response['statusmessage'];
+			}
+			$adb->pquery("INSERT INTO vtiger_smsnotifier_status(smsnotifierid,tonumber,status,statusmessage,smsmessageid,needlookup) VALUES(?,?,?,?,?,?)", array($this->get('id'), $response['to'], $responseStatus, $responseStatusMessage, $responseID, $needlookup)
+			);
+		}
+		return true;
+	}
 }
