@@ -1164,7 +1164,7 @@ $(custom : ProductsTableHierarchy|IStorages)$', '<div style="text-align:center;"
 			'a_#__taxes_global' => [
 				'columns' => ['id', 'name', 'value', 'status'],
 				'values' => [
-					[1, 'VAT', '23.00', 0],
+					[1, 'IVA', '22.00', 0],
 				]
 			],
 			's_#__companies' => [
