@@ -11,10 +11,10 @@ class EmailParser extends TextParser
 {
 
 	private static $permissionToSend = [
-		'Accounts' => 'emailoptout',
-		'Contacts' => 'emailoptout',
-		'Users' => 'emailoptout',
-		'Leads' => 'noapprovalemails'
+	//	'Accounts' => 'emailoptout',
+//		'Contacts' => 'emailoptout',
+//		'Users' => 'emailoptout',
+//		'Leads' => 'noapprovalemails'
 	];
 	public $emailoptout = true;
 
