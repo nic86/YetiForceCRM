@@ -32,10 +32,10 @@ class Users_SaveAjax_Action extends Vtiger_SaveAjax_Action
 	public function checkPermission(Vtiger_Request $request)
 	{
 		$currentUserModel = Users_Record_Model::getCurrentUserModel();
-		$userId = $request->get('userid');
+		$userId = (int) $request->get('userid');
 		if (!$currentUserModel->isAdminUser()) {
 			$mode = $request->getMode();
-			if ($mode == 'savePassword' && (isset($userId) && $currentUserModel->getId() != $userId)) {
+			if ($mode == 'savePassword' && ($userId && (int) $currentUserModel->getId() !== $userId)) {
 				throw new \Exception\NoPermittedToRecord('LBL_PERMISSION_DENIED');
 			} else if ($mode != 'savePassword' && ($currentUserModel->getId() != $request->get('record'))) {
 				throw new \Exception\NoPermittedToRecord('LBL_PERMISSION_DENIED');

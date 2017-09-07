@@ -14,7 +14,7 @@ class Users_Save_Action extends Vtiger_Save_Action
 	public function checkPermission(Vtiger_Request $request)
 	{
 		$moduleName = $request->getModule();
-		$record = $request->get('record');
+		$record = (int) $request->get('record');
 		$recordModel = $this->record ? $this->record : Vtiger_Record_Model::getInstanceById($record, $moduleName);
 		$currentUserModel = Users_Record_Model::getCurrentUserModel();
 
@@ -26,7 +26,7 @@ class Users_Save_Action extends Vtiger_Save_Action
 			if (!$currentUserModel->isAdminUser()) {
 				if (empty($record)) {
 					$allowed = false;
-				} else if ($currentUserModel->get('id') !== $recordModel->getId()) {
+				} else if ((int) $currentUserModel->get('id') !== $recordModel->getId()) {
 					$allowed = false;
 				}
 			}
