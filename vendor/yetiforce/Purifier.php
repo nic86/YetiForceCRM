@@ -58,7 +58,7 @@ class Purifier
 			// Initialize the instance if it has not yet done
 			if (!static::$purifyInstanceCache) {
 				$config = \HTMLPurifier_Config::createDefault();
-				$config->set('Core.Encoding', static::$defaultCharset);
+				$config->set('Core.Encoding', (string) static::$defaultCharset);
 				$config->set('Cache.SerializerPath', ROOT_DIRECTORY . DIRECTORY_SEPARATOR . 'cache' . DIRECTORY_SEPARATOR . 'vtlib');
 				$config->set('HTML.Allowed', '');
 				static::$purifyInstanceCache = new \HTMLPurifier($config);

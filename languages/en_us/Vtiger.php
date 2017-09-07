@@ -1284,7 +1284,7 @@ $languageStrings = [
 	'LBL_AUTOMATIC' => 'Automatic',
 	'LBL_RELATED_RECORDS_LIST' => 'Related Records List',
 	'LBL_RECORDS_LIST' => 'All Record list',
-	'LBL_DEPENDENT_MODULE_FIELDS' => 'Dependent module fields'
+	'LBL_DEPENDENT_MODULE_FIELDS' => 'Dependent module fields',
 	//Mail modal
 	'LBL_NUMBER_OF_FOUND_MAIL_ADDRESSES' => 'Number of found e-mail addresses',
 	'LBL_NUMBER_OF_SELECTED_RECORDS' => 'Number of selected records',
