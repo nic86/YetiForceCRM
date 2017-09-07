@@ -144,7 +144,7 @@ Vtiger_AdvanceFilter_Js('Workflows_AdvanceFilter_Js',{},{
 									newvaluesArr.push(valuesArr[i]);
 								}
 							}
-							var reconstructedCommaSeperatedValues = newvaluesArr.join(',');
+							var reconstructedCommaSeperatedValues = newvaluesArr.join('##');
 							rowValues[field] = reconstructedCommaSeperatedValues;
 						} else if(field == 'value' && valueSelectElement.is('select') && fieldType == 'picklist'){
 							rowValues[field] = valueSelectElement.val();
@@ -153,7 +153,7 @@ Vtiger_AdvanceFilter_Js('Workflows_AdvanceFilter_Js',{},{
 							if(value == null){
 								rowValues[field] = value;
 							} else {
-								rowValues[field] = value.join(',');
+								rowValues[field] = value.join('##');
 							}
 						} else {
 							rowValues[field] = jQuery('[name="'+field+'"]', rowElement).val();

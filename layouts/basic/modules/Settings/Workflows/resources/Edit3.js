@@ -232,7 +232,7 @@ Settings_Workflows_Edit_Js("Settings_Workflows_Edit3_Js", {}, {
 								newvaluesArr.push(valuesArr[i]);
 							}
 						}
-						var reconstructedCommaSeperatedValues = newvaluesArr.join(',');
+						var reconstructedCommaSeperatedValues = newvaluesArr.join('##');
 						rowValues[field] = reconstructedCommaSeperatedValues;
 					} else if (field == 'value' && valueSelectElement.is('select') && fieldType == 'picklist') {
 						rowValues[field] = valueSelectElement.val();
@@ -241,7 +241,7 @@ Settings_Workflows_Edit_Js("Settings_Workflows_Edit3_Js", {}, {
 						if (value == null) {
 							rowValues[field] = value;
 						} else {
-							rowValues[field] = value.join(',');
+							rowValues[field] = value.join('##');
 						}
 					} else {
 						rowValues[field] = jQuery('[name="' + field + '"]', rowElement).val();

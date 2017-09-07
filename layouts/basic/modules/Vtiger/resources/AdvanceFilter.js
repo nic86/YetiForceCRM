@@ -464,7 +464,7 @@ jQuery.Class("Vtiger_AdvanceFilter_Js", {
 							if (!newValuesArr) {
 								rowValues[field] = '';
 							} else {
-								rowValues[field] = newValuesArr.join(',');
+								rowValues[field] = newValuesArr.join('##');
 							}
 						} else if (field == 'value' && valueSelectElement.is('input')) {
 							rowValues[field] = valueSelectElement.val();
@@ -487,14 +487,14 @@ jQuery.Class("Vtiger_AdvanceFilter_Js", {
 									newvaluesArr.push(valuesArr[i]);
 								}
 							}
-							var reconstructedCommaSeperatedValues = newvaluesArr.join(',');
+							var reconstructedCommaSeperatedValues = newvaluesArr.join('##');
 							rowValues[field] = reconstructedCommaSeperatedValues;
 						} else if (field == 'value' && valueSelectElement.is('select') && ($.inArray(fieldType, ['picklist', 'multipicklist', 'modules', 'sharedOwner', 'multiReferenceValue', 'inventoryLimit', 'languages', 'currencyList', 'taxes', 'fileLocationType', 'categoryMultipicklist']) > -1)) {
 							var value = valueSelectElement.val();
 							if (value == null) {
 								rowValues[field] = value;
 							} else {
-								rowValues[field] = value.join(',');
+								rowValues[field] = value.join('##');
 							}
 						} else {
 							rowValues[field] = jQuery('[name="' + field + '"]', rowElement).val();
