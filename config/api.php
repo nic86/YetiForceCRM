@@ -11,14 +11,14 @@
 /* +********   active services   *********** */
 //List of active services. To enable you must uncomment the appropriate line.
 $enabledServices = [
-	//'dav',
+	'dav',
 	//'webservices',
 	//'webservice',
 ];
 /* +***************   DAV   **************** */
 $enableBrowser = false;
 $enableCardDAV = false;
-$enableCalDAV = false;
+$enableCalDAV = true;
 $enableWebDAV = false;
 
 /* +*********   Webservice config  ********* */
