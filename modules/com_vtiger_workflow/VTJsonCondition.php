@@ -183,6 +183,9 @@ class VTJsonCondition
 				case 'multiReferenceValue':
 					$value = Vtiger_MultiReferenceValue_UIType::COMMA . $value . Vtiger_MultiReferenceValue_UIType::COMMA;
 					break;
+				case 'multipicklist':
+					$value = str_replace('##',' |##| ',$value);
+					break;
 				case 'sharedOwner':
 					if ($condition === 'is' || $condition === 'is not') {
 						$fieldValueTemp = $value;

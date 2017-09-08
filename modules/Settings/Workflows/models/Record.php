@@ -279,9 +279,26 @@ class Settings_Workflows_Record_Model extends Settings_Vtiger_Record_Model
 	 */
 	public function transformToAdvancedFilterCondition($conditions = false)
 	{
-		if (!$conditions)
+		if (!$conditions) {
 			$conditions = $this->get('conditions');
-		$transformedConditions = array();
+		}
+
+		$transformedConditions = [];
+		foreach ($conditions as &$condition) {
+			if (strpos($condition['value'], '##') !== FALSE) {
+				$moduleName = $this->get('module_name');
+				$recordModel = Vtiger_Record_Model::getCleanInstance($moduleName);
+				$fieldInstance = $recordModel->getModule()->getFieldByName($condition['fieldname']);
+				if ($fieldInstance) {
+					switch ($fieldInstance->getFieldDataType()) {
+						case 'multipicklist':
+							$condition['value'] = str_replace('##',',',$condition['value']);
+							break;
+
+					}
+				}
+			}
+		}
 
 		if (!empty($conditions)) {
 			foreach ($conditions as $index => $info) {
