@@ -51,27 +51,10 @@
 							<span class="badge hide">0</span>
 						</a>
 					{/if}
-					{if isset($CHAT_ENTRIES)}
-						<a class="btn btn-default btn-sm headerLinkChat popoverTooltip hidden-xs hidden-sm" data-content="{\App\Language::translate('LBL_CHAT')}" href="#">
+					{if $CHAT_ACTIVE}
+						<a class="btn btn-default btn-sm headerLinkChat popoverTooltip" data-content="{\App\Language::translate('LBL_CHAT')}" href="#">
 							<span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
 						</a>
-						<div class="chatModal modal fade" tabindex="-1" role="dialog" aria-labelledby="chatLabel" data-timer="{AppConfig::module('Chat', 'REFRESH_TIME')}000">
-							<div class="modal-dialog modalRightSiteBar" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="btn btn-warning pull-right marginLeft10" data-dismiss="modal" aria-hidden="true">&times;</button>
-										<h4 class="modal-title" id="myModalLabel"><span class="glyphicon glyphicon-comment" aria-hidden="true"></span>&nbsp;&nbsp;{\App\Language::translate('Chat','Chat')}</h4>
-									</div>
-									<div class="modal-body">
-										{include file="Items.tpl"|@vtemplate_path:'Chat'}
-									</div>
-									<div class="modal-footer pinToDown">
-										<input type="text" class="form-control message" /><br />
-										<button type="button" class="btn btn-primary addMsg">{\App\Language::translate('LBL_ADD')}</button>
-									</div>
-								</div>
-							</div>
-						</div>
 					{/if}
 					{if $REMINDER_ACTIVE}
 						<a class="btn btn-default btn-sm isBadge remindersNotice popoverTooltip {if AppConfig::module('Calendar', 'AUTO_REFRESH_REMINDERS')}autoRefreshing{/if}" data-content="{\App\Language::translate('LBL_REMINDER')}" href="#">
@@ -79,12 +62,9 @@
 							<span class="badge bgDanger hide">0</span>
 						</a>
 					{/if}
-					{if AppConfig::performance('BROWSING_HISTORY_WORKING')}
-						<a class="btn btn-default btn-sm showHistoryBtn popoverTooltip dropdownMenu" data-content="{vtranslate('LBL_PAGES_HISTORY')}" href="#">
-							<i class="fa fa-history" aria-hidden="true"></i>
-						</a>
-						{include file='BrowsingHistory.tpl'|@vtemplate_path:$MODULE}
-					{/if}
+					<a class="btn btn-default btn-sm showHistoryBtn popoverTooltip dropdownMenu" data-content="{vtranslate('LBL_PAGES_HISTORY')}" href="#">
+						<i class="fa fa-history" aria-hidden="true"></i>
+					</a>
 					{foreach key=index item=obj from=$MENU_HEADER_LINKS}
 						{if $obj->linktype == 'HEADERLINK'}
 							{assign var="HREF" value='#'}

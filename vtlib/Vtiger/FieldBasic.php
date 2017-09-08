@@ -101,7 +101,7 @@ class FieldBasic
 		$maxSeq = (new \App\Db\Query())->from('vtiger_field')
 			->where(['tabid' => $this->getModuleId(), 'block' => $this->getBlockId()])
 			->max('sequence');
-		if ($maxSeq) {
+		if (isset($maxSeq)) {
 			return $maxSeq + 1;
 		}
 		return 0;
@@ -116,7 +116,7 @@ class FieldBasic
 		$maxSeq = (new \App\Db\Query())->from('vtiger_field')
 			->where(['tabid' => $this->getModuleId()])
 			->max('quickcreatesequence');
-		if ($maxSeq) {
+		if (isset($maxSeq)) {
 			return $maxSeq + 1;
 		}
 		return 0;
