@@ -871,15 +871,14 @@ class Settings_Profiles_Record_Model extends Settings_Vtiger_Record_Model
 			$moduleFields = $userModuleModel->getFields();
 
 			$userAccessbleFields = [];
-			$skipFields = array(98, 115, 116, 31, 32);
+			$skipFieldsType = [98, 115, 116, 31, 32, 156, 106, 101, 3, 7];
+			$skipFieldsName = ['asterisk_extension', 'available', 'auto_assign'];
 			foreach ($moduleFields as $fieldName => $fieldModel) {
-				if ($fieldModel->getFieldDataType() == 'string' || $fieldModel->getFieldDataType() == 'email' || $fieldModel->getFieldDataType() == 'phone') {
-					if (!in_array($fieldModel->get('uitype'), $skipFields) && $fieldName != 'asterisk_extension') {
-						if (!isset($userAccessbleFields[$fieldModel->get('id')])) {
-							$userAccessbleFields[$fieldModel->get('id')] = $fieldName;
-						} else {
-							$userAccessbleFields[$fieldModel->get('id')] .= $fieldName;
-						}
+				if (!in_array($fieldModel->get('uitype'), $skipFieldsType) && !in_array($fieldName, $skipFieldsName)) {
+					if (!isset($userAccessbleFields[$fieldModel->get('id')])) {
+						$userAccessbleFields[$fieldModel->get('id')] = $fieldName;
+					} else {
+						$userAccessbleFields[$fieldModel->get('id')] .= $fieldName;
 					}
 				}
 			}
