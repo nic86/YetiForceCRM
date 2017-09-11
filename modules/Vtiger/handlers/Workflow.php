@@ -26,10 +26,10 @@ class Vtiger_Workflow_Handler
 		$recordModel = $eventHandler->getRecordModel();
 		$recordId = $recordModel->getId();
 		$isNew = $recordModel->isNew();
-		if (!isset($this->workflows)) {
-			$wfs = new VTWorkflowManager();
-			$this->workflows = $wfs->getWorkflowsForModule($eventHandler->getModuleName());
-		}
+
+		$wfs = new VTWorkflowManager();
+		$this->workflows = $wfs->getWorkflowsForModule($eventHandler->getModuleName());
+
 		foreach ($this->workflows as &$workflow) {
 			switch ($workflow->executionCondition) {
 				case VTWorkflowManager::$ON_FIRST_SAVE:
