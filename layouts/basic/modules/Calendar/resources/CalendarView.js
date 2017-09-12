@@ -103,6 +103,8 @@ jQuery.Class("Calendar_CalendarView_Js", {
 
 		//Default first hour of the day
 		var defaultFirstHour = app.getMainParams('start_hour') + ':00';
+        var defaultEndHour = app.getMainParams('end_hour') + ':00';
+
 		var hiddenDays = [];
 		if (app.getMainParams('switchingDays') == 'workDays') {
 			hiddenDays = app.getMainParams('hiddenDays', true);
@@ -117,6 +119,10 @@ jQuery.Class("Calendar_CalendarView_Js", {
 			axisFormat: userDefaultTimeFormat,
 			scrollTime: defaultFirstHour,
 			firstDay: convertedFirstDay,
+            minTime: defaultFirstHour,
+            maxTime: defaultEndHour,
+            height:'auto',
+            contentHeight: 'auto',
 			defaultView: userDefaultActivityView,
 			editable: true,
 			slotMinutes: 15,
