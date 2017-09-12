@@ -808,7 +808,18 @@ class Vtiger_Module_Model extends \vtlib\Module
 	 */
 	public function getPopupFields()
 	{
-		return $this->getEntityInstance()->search_fields_name;
+		$customViewModel = \App\CustomView::getInstance($this->getName());
+		$defaultViewId = $customViewModel->getDefaultCvId();
+		$defautlViewColumns = $customViewModel->getColumnsListByCvid($defaultViewId);
+		if(!empty($defautlViewColumns)) {
+			$fields = [];
+			foreach($defautlViewColumns as $column) {
+				$fields[] = explode(':',$column)[2];
+			}
+			return $fields;
+		} else {
+			return $this->getEntityInstance()->search_fields_name;
+		}
 	}
 
 	public function isWorkflowSupported()

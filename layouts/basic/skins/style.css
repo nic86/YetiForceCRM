@@ -5913,7 +5913,6 @@ select.form-control {
 	margin-right: 5px;
 }
 .textOverflowEllipsis:hover{
-	overflow: initial;
 }
 .input-group-sm .input-group-addon.checkbox-addon{
 	padding: 4px 7px !important;
