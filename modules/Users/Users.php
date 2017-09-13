@@ -366,7 +366,7 @@ class Users extends CRMEntity
 	 * All Rights Reserved..
 	 * Contributor(s): Contributor(s): YetiForce.com
 	 */
-	public function change_password($userPassword, $newPassword, $dieOnError = true)
+	public function changePassword($userPassword, $newPassword, $dieOnError = true, $validateOldPassword = true)
 	{
 		$userName = $this->column_fields['user_name'];
 		$currentUser = \App\User::getCurrentUserModel();
@@ -376,7 +376,7 @@ class Users extends CRMEntity
 			$this->error_string = vtranslate('ERR_PASSWORD_CHANGE_FAILED_1') . $userName . vtranslate('ERR_PASSWORD_CHANGE_FAILED_2');
 			return false;
 		}
-		if (!$currentUser->isAdmin()) {
+		if (!$currentUser->isAdmin() && $validateOldPassword) {
 			if (!$this->verifyPassword($userPassword)) {
 				\App\Log::warning('Incorrect old password for ' . $userName);
 				$this->error_string = vtranslate('ERR_PASSWORD_INCORRECT_OLD');

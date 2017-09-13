@@ -22,7 +22,7 @@
  * @param Users $user 
  * 
  */
-function vtws_changePassword($id, $oldPassword, $newPassword, $confirmPassword, $user)
+function vtws_changePassword($id, $oldPassword, $newPassword, $confirmPassword, $user, $validateOldPassword = true)
 {
 	vtws_preserveGlobal('current_user', $user);
 	$idComponents = vtws_getIdComponents($id);
@@ -40,7 +40,7 @@ function vtws_changePassword($id, $oldPassword, $newPassword, $confirmPassword, 
 			}
 		}
 		if (strcmp($newPassword, $confirmPassword) === 0) {
-			$success = $newUser->change_password($oldPassword, $newPassword);
+			$success = $newUser->changePassword($oldPassword, $newPassword, true, $validateOldPassword);
 			$error = $newUser->db->hasFailedTransaction();
 			if ($error) {
 				throw new WebServiceException(WebServiceErrorCode::$DATABASEQUERYERROR, vtws_getWebserviceTranslatedString('LBL_' .
