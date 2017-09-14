@@ -99,7 +99,7 @@ class DateField extends BaseField
 	{
 		$value = $this->getStdValue();
 		if (count($value)===1) {
-			$value[1] = $value[
+			$value[1] = $value[0];
 		}
 		return ['between', $this->getColumnName(), $value[0], $value[1]];
 	}
@@ -112,7 +112,7 @@ class DateField extends BaseField
 	{
 		$value = $this->getArrayValue();
 		if (count($value)===1) {
-			$value[1] = $value[
+			$value[1] = $value[0];
 		}
 		return ['between', $this->getColumnName(), $value[0], $value[1]];
 	}
