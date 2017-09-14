@@ -72,7 +72,8 @@ class DateField extends BaseField
 	public function getArrayValue()
 	{
 		return array_map(function($row) {
-			return \DateTimeField::convertToDBFormat(reset(explode(' ', $row)));
+			$valueArr = explode(' ', $row);
+			return \DateTimeField::convertToDBFormat(reset($valueArr));
 		}, explode(',', $this->value));
 	}
 
@@ -97,6 +98,9 @@ class DateField extends BaseField
 	public function getStdOperator()
 	{
 		$value = $this->getStdValue();
+		if (count($value)===1) {
+			$value[1] = $value[
+		}
 		return ['between', $this->getColumnName(), $value[0], $value[1]];
 	}
 
@@ -107,6 +111,9 @@ class DateField extends BaseField
 	public function operatorBw()
 	{
 		$value = $this->getArrayValue();
+		if (count($value)===1) {
+			$value[1] = $value[
+		}
 		return ['between', $this->getColumnName(), $value[0], $value[1]];
 	}
 
