@@ -118,7 +118,9 @@ class WorkFlowScheduler
 			'is empty' => 'y',
 			'is not empty' => 'ny',
 			'before' => 'l',
+			'before today' => 'l',
 			'after' => 'g',
+			'after today' => 'g',
 			'between' => 'bw',
 			'less than days ago' => 'bw',
 			'more than days ago' => 'l',
@@ -180,7 +182,7 @@ class WorkFlowScheduler
 	public function _specialDateTimeOperator()
 	{
 		return array('less than days ago', 'more than days ago', 'in less than', 'in more than', 'days ago', 'days later',
-			'less than hours before', 'less than hours later', 'more than hours later', 'more than hours before', 'is today');
+			'less than hours before', 'less than hours later', 'more than hours later', 'more than hours before', 'is today', 'after today', 'before today');
 	}
 
 	/**
@@ -231,6 +233,14 @@ class WorkFlowScheduler
 				break;
 
 			case 'is today' :
+				$value = date('Y-m-d');
+				break;
+
+			case 'after today' :
+				$value = date('Y-m-d');
+				break;
+
+			case 'before today' :
 				$value = date('Y-m-d');
 				break;
 

@@ -272,6 +272,8 @@ Vtiger_Date_Field_Js('Workflows_Date_Field_Js',{},{
 				var html = '<input name="'+ this.getName() +'"  type="text" ReadOnly="true" value="'+  startValue +','+ endValue +'">'
 				return jQuery(html);
 			} else if(comparatorSelectedOptionVal == 'is today') {
+			} else if(comparatorSelectedOptionVal == 'after today') {
+			} else if(comparatorSelectedOptionVal == 'before today') {
 				//show nothing
 			}else {
 				return this._super();

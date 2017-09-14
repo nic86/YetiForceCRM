@@ -48,6 +48,24 @@ class DateTimeRange
 				$dateValue[1] = $tomorrow;
 				break;
 
+			case 'aftertoday':
+				$dateObject->modify('tomorrow');
+				$tomorrow = $dateObject->format('Y-m-d');
+				$dateObject->modify('9999-01-01');
+				$future = $dateObject->format('Y-m-d');
+				$dateValue[0] = $tomorrow;
+				$dateValue[1] = $future;
+				break;
+
+			case 'beforetoday':
+				$dateObject->modify('last day');
+				$yesterday = $dateObject->format('Y-m-d');
+				$dateObject->modify('0001-01-01');
+				$past = $dateObject->format('Y-m-d');
+				$dateValue[0] = $past;
+				$dateValue[1] = $yesterday;
+				break;
+
 			case 'thisweek':
 				if ($todayName == $weekStartDay) {
 					$dateObject->modify('-0 week ' . $weekStartDay);

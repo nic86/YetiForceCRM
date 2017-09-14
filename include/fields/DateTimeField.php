@@ -120,6 +120,9 @@ class DateTimeField
 		if ($format == '') {
 			$format = 'yyyy-mm-dd';
 		}
+		if (strlen($date)>10) {
+			$date = substr($date, 0, 10);
+		}
 		$dbDate = '';
 		switch ($format) {
 			case 'dd-mm-yyyy': list($d, $m, $y) = explode('-', $date);
@@ -358,7 +361,15 @@ class DateTimeField
 	 */
 	public function getDisplayDate($user = null)
 	{
-		$date_value = explode(' ', $this->datetime);
+		if (strpos($this->datetime, ',') !== false) {
+			$date_value = str_replace('00:00:00','',$this->datetime);
+			$date_value = str_replace(' ','',$date_value);
+			$date_value = explode(',', $date_value);
+			unset($date_value[1]);
+		} else {
+			$date_value = explode(' ', $this->datetime);
+		}
+
 		if (isset($date_value[1]) && $date_value[1] != '') {
 			$date = self::convertToUserTimeZone($this->datetime, $user);
 			$date_value = $date->format('Y-m-d');
@@ -372,6 +383,13 @@ class DateTimeField
 	{
 
 		\App\Log::trace('Start ' . __METHOD__ . '(' . $this->datetime . ')');
+		if (strpos($this->datetime, ',') !== false) {
+			$date_value = explode(',', $this->datetime);
+			$date = self::convertToUserTimeZone($date_value[0], $user);
+		} else {
+			$date = self::convertToUserTimeZone($this->datetime, $user);
+		}
+
 		$date = self::convertToUserTimeZone($this->datetime, $user);
 		$time = $date->format("H:i");
 

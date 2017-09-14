@@ -214,16 +214,22 @@ class VTJsonCondition
 		switch ($condition) {
 			case 'equal to':
 				return $fieldValue == $value;
+				break;
 			case 'less than':
 				return $fieldValue < $value;
+				break;
 			case 'greater than':
 				return $fieldValue > $value;
+				break;
 			case 'does not equal':
 				return $fieldValue != $value;
+				break;
 			case 'less than or equal to':
 				return $fieldValue <= $value;
+				break;
 			case 'greater than or equal to':
 				return $fieldValue >= $value;
+				break;
 			case 'is':
 				if (preg_match('/([^:]+):boolean$/', $value, $match)) {
 					$value = $match[1];
@@ -235,6 +241,7 @@ class VTJsonCondition
 				} else {
 					return $fieldValue == $value;
 				}
+				break;
 			case 'is not':
 				if (preg_match('/([^:]+):boolean$/', $value, $match)) {
 					$value = $match[1];
@@ -246,11 +253,13 @@ class VTJsonCondition
 				} else {
 					return $fieldValue != $value;
 				}
+				break;
 			case 'contains':
 				if (is_array($value)) {
 					return in_array($fieldValue, $value);
 				}
 				return strpos($fieldValue, $value) !== FALSE;
+				break;
 			case 'does not contain':
 				if (empty($value)) {
 					unset($value);
@@ -259,12 +268,16 @@ class VTJsonCondition
 					return !in_array($fieldValue, $value);
 				}
 				return strpos($fieldValue, $value) === FALSE;
+				break;
 			case 'starts with':
 				return $this->startsWith($fieldValue, $value);
+				break;
 			case 'ends with':
 				return $this->endsWith($fieldValue, $value);
+				break;
 			case 'matches':
 				return preg_match($value, $fieldValue);
+				break;
 
 			case 'has changed' :
 				$hasChanged = $recordModel->getPreviousValue($cond['fieldname']);
@@ -273,16 +286,19 @@ class VTJsonCondition
 				} else {
 					return $fieldValue != $hasChanged;
 				}
+				break;
 			case 'is empty':
 				if (empty($fieldValue)) {
 					return true;
 				}
 				return false;
+				break;
 			case 'is not empty':
 				if (empty($fieldValue)) {
 					return false;
 				}
 				return true;
+				break;
 			case 'before':
 				if (empty($fieldValue)) {
 					return false;
@@ -291,6 +307,25 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
+			case 'after today':
+				if (empty($fieldValue)) {
+					return false;
+				}
+				if ($fieldValue > date('Y-m-d')) {
+					return true;
+				}
+				return false;
+				break;
+			case 'before today':
+				if (empty($fieldValue)) {
+					return false;
+				}
+				if ($fieldValue < date('Y-m-d')) {
+					return true;
+				}
+				return false;
+				break;
 			case 'after':
 				if (empty($fieldValue)) {
 					return false;
@@ -299,6 +334,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'between':
 				if (empty($fieldValue)) {
 					return false;
@@ -309,11 +345,13 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'is today':
 				if ($fieldValue == date('Y-m-d')) {
 					return true;
 				}
 				return false;
+				break;
 			case 'less than days ago':
 				if (empty($fieldValue) || empty($value)) {
 					return false;
@@ -323,6 +361,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'more than days ago':
 				if (empty($fieldValue) || empty($value)) {
 					return false;
@@ -332,6 +371,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'in less than':
 				if (empty($fieldValue) || empty($value)) {
 					return false;
@@ -342,6 +382,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'in more than':
 				if (empty($fieldValue) || empty($value)) {
 					return false;
@@ -351,6 +392,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'days ago':
 				if (empty($fieldValue) || empty($value)) {
 					return false;
@@ -360,6 +402,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'days later':
 				if (empty($fieldValue) || empty($value)) {
 					return false;
@@ -369,6 +412,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 
 			case 'less than hours before':
 				if (empty($rawFieldValue) || empty($value)) {
@@ -380,6 +424,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 
 			case 'less than hours later':
 				if (empty($rawFieldValue) || empty($value)) {
@@ -391,6 +436,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 
 			case 'more than hours before':
 				if (empty($rawFieldValue) || empty($value)) {
@@ -401,6 +447,7 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'more than hours later':
 				if (empty($rawFieldValue) || empty($value)) {
 					return false;
@@ -410,24 +457,29 @@ class VTJsonCondition
 					return true;
 				}
 				return false;
+				break;
 			case 'has changed to' :
 				$oldValue = $recordModel->getPreviousValue($cond['fieldname']);
 				return $oldValue !== false && $recordModel->get($cond['fieldname']) == $value;
+				break;
 			case 'is added':
 				//This condition was used only for comments. It should not execute from not from workflows, So it was always "FALSE"
 				return false;
+				break;
 			case 'is Watching Record':
 				$watchdog = Vtiger_Watchdog_Model::getInstanceById($recordModel->getId(), $recordModel->getModuleName());
 				if ($watchdog->isWatchingRecord()) {
 					return true;
 				}
 				return false;
+				break;
 			case 'is Not Watching Record':
 				$watchdog = Vtiger_Watchdog_Model::getInstanceById($recordModel->getId(), $recordModel->getModuleName());
 				if ($watchdog->isWatchingRecord()) {
 					return false;
 				}
 				return true;
+				break;
 			default:
 				//Unexpected condition
 				throw new Exception('Found an unexpected condition: ' . $condition);
