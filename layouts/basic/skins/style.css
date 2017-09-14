@@ -605,7 +605,7 @@ hr {
 	text-decoration: none;
 }
 .gridster > ul .widgetChartContainer {
-	height: 100% !important;
+	min-height: 100% !important;
 }
 .listViewPageDiv {
 	margin: 0px 0;
