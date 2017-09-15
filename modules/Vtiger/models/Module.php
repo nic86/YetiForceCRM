@@ -810,7 +810,10 @@ class Vtiger_Module_Model extends \vtlib\Module
 	{
 		$customViewModel = \App\CustomView::getInstance($this->getName());
 		$defaultViewId = $customViewModel->getDefaultCvId();
-		$defautlViewColumns = $customViewModel->getColumnsListByCvid($defaultViewId);
+		if (!empty($defaultViewId)) {
+			$defautlViewColumns = $customViewModel->getColumnsListByCvid($defaultViewId);
+		}
+
 		if(!empty($defautlViewColumns)) {
 			$fields = [];
 			foreach($defautlViewColumns as $column) {
