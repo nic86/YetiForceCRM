@@ -16,14 +16,12 @@ class WorkFlowScheduler
 {
 
 	private $user;
-	private $db;
 
-	public function __construct($adb)
+	public function __construct()
 	{
 		$util = new VTWorkflowUtils();
 		$adminUser = $util->adminUser();
 		$this->user = $adminUser;
-		$this->db = $adb;
 	}
 
 	public function getWorkflowQuery($workflow)
@@ -55,30 +53,29 @@ class WorkFlowScheduler
 	public function queueScheduledWorkflowTasks()
 	{
 		$default_timezone = AppConfig::main('default_timezone');
-		$adb = $this->db;
-
-		$vtWorflowManager = new VTWorkflowManager($adb);
-		$taskQueue = new VTTaskQueue($adb);
-		$entityCache = new VTEntityCache($this->user);
+		$vtWorflowManager = new VTWorkflowManager();
+		$taskQueue = new VTTaskQueue();
 
 		// set the time zone to the admin's time zone, this is needed so that the scheduled workflow will be triggered
 		// at admin's time zone rather than the systems time zone. This is specially needed for Hourly and Daily scheduled workflows
 		$admin = Users::getActiveAdminUser();
 		$adminTimeZone = $admin->time_zone;
-		@date_default_timezone_set($adminTimeZone);
+		date_default_timezone_set($adminTimeZone);
 		$currentTimestamp = date('Y-m-d H:i:s');
-		@date_default_timezone_set($default_timezone);
+		date_default_timezone_set($default_timezone);
 
 		$scheduledWorkflows = $vtWorflowManager->getScheduledWorkflows($currentTimestamp);
 		foreach ($scheduledWorkflows as $i => &$workflow) {
-			$tm = new VTTaskManager($adb);
+			$tm = new VTTaskManager();
 			$tasks = $tm->getTasksForWorkflow($workflow->id);
 			if ($tasks) {
 				$records = $this->getEligibleWorkflowRecords($workflow);
+
 				foreach ($records as &$recordId) {
 					$recordModel = Vtiger_Record_Model::getInstanceById($recordId);
 					$data = $recordModel->getData();
 					foreach ($tasks as $task) {
+
 						if ($task->active) {
 							$trigger = $task->trigger;
 							if ($trigger != null) {
@@ -100,9 +97,14 @@ class WorkFlowScheduler
 		$scheduledWorkflows = null;
 	}
 
-	public function addWorkflowConditionsToQueryGenerator($queryGenerator, $conditions)
+	/**
+	 * Add workflow conditions to query generator
+	 * @param \App\QueryGenerator $queryGenerator
+	 * @param array $conditions
+	 */
+	public function addWorkflowConditionsToQueryGenerator(\App\QueryGenerator $queryGenerator, $conditions)
 	{
-		$conditionMapping = array(
+		$conditionMapping = [
 			'equal to' => 'e',
 			'less than' => 'l',
 			'greater than' => 'g',
@@ -133,7 +135,7 @@ class WorkFlowScheduler
 			'more than hours before' => 'l',
 			'more than hours later' => 'g',
 			'is today' => 'e',
-		);
+		];
 		//Algorithm :
 		//1. If the query has already where condition then start a new group with and condition, else start a group
 		//2. Foreach of the condition, if its a condition in the same group just append with the existing joincondition
@@ -146,14 +148,12 @@ class WorkFlowScheduler
 				if ($operation === 'has changed')
 					continue;
 				$value = $condition['value'];
-				if (in_array($operation, $this->_specialDateTimeOperator())) {
-					$value = $this->_parseValueForDate($condition);
+				if (in_array($operation, $this->specialDateTimeOperator())) {
+					$value = $this->parseValueForDate($condition);
 				}
-				$groupId = $condition['groupid'];
 				$groupJoin = $condition['groupjoin'];
 				$operator = $conditionMapping[$operation];
 				$fieldName = $condition['fieldname'];
-				$valueType = $condition['valuetype'];
 				$value = html_entity_decode($value);
 				preg_match('/(\w+) : \((\w+)\) (\w+)/', $condition['fieldname'], $matches);
 				if (count($matches) != 0) {
@@ -179,7 +179,7 @@ class WorkFlowScheduler
 	 * Special Date functions
 	 * @return <Array>
 	 */
-	public function _specialDateTimeOperator()
+	public function specialDateTimeOperator()
 	{
 		return array('less than days ago', 'more than days ago', 'in less than', 'in more than', 'days ago', 'days later',
 			'less than hours before', 'less than hours later', 'more than hours later', 'more than hours before', 'is today', 'after today', 'before today');
@@ -190,7 +190,7 @@ class WorkFlowScheduler
 	 * @param <Array> $condition
 	 * @return string
 	 */
-	public function _parseValueForDate($condition)
+	public function parseValueForDate($condition)
 	{
 		$value = $condition['value'];
 		$operation = $condition['operation'];
@@ -199,7 +199,7 @@ class WorkFlowScheduler
 		$default_timezone = vglobal('default_timezone');
 		$admin = Users::getActiveAdminUser();
 		$adminTimeZone = $admin->time_zone;
-		@date_default_timezone_set($adminTimeZone);
+		date_default_timezone_set($adminTimeZone);
 
 		switch ($operation) {
 			case 'less than days ago' :  //between current date and (currentdate - givenValue)
@@ -264,7 +264,7 @@ class WorkFlowScheduler
 				$value = date('Y-m-d H:i:s', strtotime('-' . $hours . ' hours'));
 				break;
 		}
-		@date_default_timezone_set($default_timezone);
-		return $value;
+		date_default_timezone_set($default_timezone);
+		return \DateTimeField::convertToUserFormat($value);
 	}
 }

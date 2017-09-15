@@ -176,10 +176,13 @@ class Field
 				->where(['vtiger_tab.presence' => 0, 'vtiger_field.uitype' => [66, 67, 68]]);
 			$dataReader = $query->createCommand()->query();
 			while ($row = $dataReader->read()) {
-				foreach (ModuleHierarchy::getModulesByUitype($row['uitype']) as $module => $value) {
-					$row['relmod'] = $module;
-					$row['type'] = 3;
-					$fields[$row['name']][$row['relmod']] = $row;
+				$moduleHierarcy = ModuleHierarchy::getModulesByUitype($row['uitype']);
+				if(!empty($moduleHierarcy)) {
+					foreach ($moduleHierarcy as $module => $value) {
+						$row['relmod'] = $module;
+						$row['type'] = 3;
+						$fields[$row['name']][$row['relmod']] = $row;
+					}
 				}
 			}
 			Cache::save('getRelatedFieldForModule', $key, $fields, Cache::LONG);
