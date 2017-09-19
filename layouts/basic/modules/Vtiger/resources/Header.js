@@ -108,7 +108,7 @@ jQuery.Class("Vtiger_Header_Js", {
 			jQuery(data).removeAttr('data-validation-engine');
 		});
 		form.addClass('not_validation');
-		form.submit();
+        form.attr('target', '_blank').submit();
 	},
 	showAnnouncement: function () {
 		var thisInstance = this;

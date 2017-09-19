@@ -16,6 +16,9 @@ class TreeField extends StringField
 	 */
 	public function getValue()
 	{
+		if (strpos($this->value, '##') === false) {
+ 			return $this->value;
+ 		}
 		return explode('##', $this->value);
 	}
 
