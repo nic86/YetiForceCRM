@@ -46,6 +46,12 @@ class Vtiger_Base_Model
 		return \App\Purifier::purifySql($this->get($key), $skipEmtpy);
 	}
 
+	public function getForHtml($key)
+	{
+		return \App\Purifier::encodeHtml($this->get($key));
+	}
+
+
 	/**
 	 * Function to set the value for a given key
 	 * @param $key
