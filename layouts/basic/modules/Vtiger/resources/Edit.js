@@ -199,6 +199,11 @@ jQuery.Class("Vtiger_Edit_Js", {
 							}
 						} else if (mapFieldElement.length == 0) {
 							$("<input type='hidden'/>").attr("name", key).attr("value", response[value[0]]).appendTo(formElement);
+						} else if (mapFieldElement.hasClass('dateField')) {
+							var dateFormat = mapFieldElement.data("dateFormat");
+							var startDateInstance = Date.parse(response[value[0]]);
+							var startDateString = app.getDateInVtigerFormat(dateFormat, startDateInstance);
+							mapFieldElement.val(startDateString);
 						} else {
 							mapFieldElement.val(response[value[0]]);
 						}
