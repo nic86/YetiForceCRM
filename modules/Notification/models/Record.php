@@ -146,7 +146,7 @@ class Notification_Record_Model extends Vtiger_Record_Model
 			\App\Log::trace('Exiting ' . __METHOD__ . ' - return true');
 			return false;
 		}
-		if ($notificationType !== 'PLL_USERS' && !\App\Privilege::isPermitted($relatedModule, 'DetailView', $relatedId)) {
+		if ($notificationType !== 'PLL_USERS' && !\App\Privilege::isPermitted($relatedModule, 'DetailView', $relatedId) && \App\Record::isExists($relatedId)) {
 			\App\Log::error('User ' . vtlib\Functions::getOwnerRecordLabel($this->get('assigned_user_id')) .
 				' does not have permission for this record ' . $relatedId);
 			\App\Log::trace('Exiting ' . __METHOD__ . ' - return true');
@@ -173,7 +173,7 @@ class Notification_Record_Model extends Vtiger_Record_Model
 		}
 		$usersCollection = array_unique($usersCollection);
 		foreach ($usersCollection as $userId) {
-			if ($relatedId && $notificationType === 'PLL_SYSTEM' && !\App\Privilege::isPermitted($relatedModule, 'DetailView', $relatedId, $userId)) {
+			if ($relatedId && $notificationType === 'PLL_SYSTEM' && !\App\Privilege::isPermitted($relatedModule, 'DetailView', $relatedId, $userId) && \App\Record::isExists($relatedId)) {
 				continue;
 			}
 			$this->set('assigned_user_id', $userId);
