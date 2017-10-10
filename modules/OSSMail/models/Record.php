@@ -69,7 +69,7 @@ class OSSMail_Record_Model extends Vtiger_Record_Model
 		$validatecert = '';
 		if (!empty($parseHost['host'])) {
 			$host = $parseHost['host'];
-			$sslMode = (isset($a_host['scheme']) && in_array($parseHost['scheme'], ['ssl', 'imaps', 'tls'])) ? $parseHost['scheme'] : null;
+			$sslMode = (isset($parseHost['scheme']) && in_array($parseHost['scheme'], ['ssl', 'imaps', 'tls'])) ? $parseHost['scheme'] : null;
 			if (!empty($parseHost['port'])) {
 				$port = $parseHost['port'];
 			} else if ($sslMode && $sslMode != 'tls' && (!$rcConfig['default_port'] || $rcConfig['default_port'] == 143)) {
@@ -97,22 +97,22 @@ class OSSMail_Record_Model extends Vtiger_Record_Model
 		imap_timeout(IMAP_OPENTIMEOUT, 5);
 		$options = 0;
 		$max_retries = $rcConfig['imap_max_retries'];
-		$params = $rcConfig['imap_params'];
+		$params = [];
+		if (isset($config['imap_params'])) {
+			$params = $config['imap_params'];
+		}
+		$imapConnectMailbox = "{{$host}:{$port}/imap{$sslMode}{$validatecert}}{$folder}";
 		\App\Log::trace("imap_open({" . $host . ":" . $port . "/imap" . $sslMode . $validatecert . "}$folder, $user , $password. $options, $max_retries, " . var_export($params, true) . ") method ...");
-		$mbox = @imap_open("{" . $host . ":" . $port . "/imap" . $sslMode . $validatecert . "}$folder", $user, $password, $options, $max_retries, $params);
-		if ($mbox === false && $dieOnError) {
-			self::imapThrowError(imap_last_error());
+		$mbox = @imap_open($imapConnectMailbox, $user, $password, $options, $max_retries, $params);
+		if (!$mbox) {
+			\App\Log::error('Error OSSMail_Record_Model::imapConnect(): ' . imap_last_error());
+			if ($dieOnError) {
+				throw new \App\Exceptions\AppException('IMAP_ERROR' . ': ' . imap_last_error());
+			}
 		}
 		self::$imapConnectCache[$cacheName] = $mbox;
 		\App\Log::trace('Exit OSSMail_Record_Model::imapConnect() method ...');
 		return $mbox;
-	}
-
-	public static function imapThrowError($error)
-	{
-
-		\App\Log::error("Error OSSMail_Record_Model::imapConnect(): " . $error);
-		vtlib\Functions::throwNewException(vtranslate('IMAP_ERROR', 'OSSMailScanner') . ': ' . $error);
 	}
 
 	public static function updateMailBoxmsgInfo($users)
