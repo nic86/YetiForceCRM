@@ -190,6 +190,7 @@ class OSSMail_Mail_Model extends Vtiger_Base_Model
 							$ids = [];
 							$queryGenerator = new \App\QueryGenerator($moduleName);
 							$queryGenerator->setFields(['id']);
+							$queryGenerator->addCondition($row[1], $email, 'e');
 							$query = $queryGenerator->createQuery();
 							$dataReader = $queryGenerator->createQuery()->createCommand()->query();
 							while (($crmid = $dataReader->readColumn(0)) !== false) {
