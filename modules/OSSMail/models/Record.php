@@ -95,8 +95,10 @@ class OSSMail_Record_Model extends Vtiger_Record_Model
 		}
 
 		imap_timeout(IMAP_OPENTIMEOUT, 5);
-		$options = 0;
-		$max_retries = $rcConfig['imap_max_retries'];
+		$max_retries = $options = 0;
+		if (isset($config['imap_max_retries'])) {
+			$maxRetries = $rcConfig['imap_max_retries'];
+		}
 		$params = [];
 		if (isset($config['imap_params'])) {
 			$params = $config['imap_params'];
