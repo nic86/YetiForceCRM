@@ -366,43 +366,49 @@ class Settings_Workflows_Record_Model extends Settings_Vtiger_Record_Model
 	 */
 	public function getDependentModules()
 	{
-		$moduleName = $this->getModule()->getName();
-		$query = (new App\Db\Query())->select(['fieldname', 'tabid', 'typeofdata', 'reference_module' => 'vtiger_ws_referencetype.type'])
-			->from('vtiger_field')
-			->innerJoin('vtiger_ws_fieldtype', 'vtiger_field.uitype = vtiger_ws_fieldtype.uitype')
-			->innerJoin('vtiger_ws_referencetype', 'vtiger_ws_fieldtype.fieldtypeid = vtiger_ws_referencetype.fieldtypeid');
-		$querySecond = (new App\Db\Query())->select(['fieldname', 'tabid', 'typeofdata', 'reference_module' => 'relmodule'])
-			->from('vtiger_field')
-			->innerJoin('vtiger_fieldmodulerel', 'vtiger_field.fieldid = vtiger_fieldmodulerel.fieldid');
-		$dataReader = $query->union($querySecond)->createCommand()->query();
-		$dependentFields = [];
-		// List of modules which will not be supported by 'Create Entity' workflow task
-		$filterModules = ['Calendar', 'Events', 'Accounts'];
-		$skipFieldsList = [];
-		while ($row = $dataReader->read()) {
-			$fieldName = $row['fieldname'];
-			$tabModuleName = \App\Module::getModuleName($row['tabid']);
-			if (in_array($tabModuleName, $filterModules))
-				continue;
-			if ($row['reference_module'] == $moduleName && $tabModuleName != $moduleName) {
-				if (!\App\Module::isModuleActive($tabModuleName))
-					continue;
-				$dependentFields[$tabModuleName] = ['fieldname' => $fieldName, 'modulelabel' => \App\Language::translate($tabModuleName, $tabModuleName)];
-			} else {
-				$dataTypeInfo = explode('~', $row['typeofdata']);
-				if ($dataTypeInfo[1] === 'M') { // If the current reference field is mandatory
-					$skipFieldsList[$tabModuleName] = array('fieldname' => $fieldName);
-				}
-			}
+		$dependentFields = Settings_Workflows_Module_Model::getSupportedModules();
+		foreach ($dependentFields as $field) {
+			$depField[$field->getName()]=$field;
 		}
-		foreach ($skipFieldsList as $tabModuleName => $fieldInfo) {
-			$dependentFieldInfo = $dependentFields[$tabModuleName];
-			if ($dependentFieldInfo['fieldname'] != $fieldInfo['fieldname']) {
-				unset($dependentFields[$tabModuleName]);
-			}
-		}
+		return $depField;
+	
+		/* $moduleName = $this->getModule()->getName(); */
+		/* $query = (new App\Db\Query())->select(['fieldname', 'tabid', 'typeofdata', 'reference_module' => 'vtiger_ws_referencetype.type']) */
+		/* 	->from('vtiger_field') */
+		/* 	->innerJoin('vtiger_ws_fieldtype', 'vtiger_field.uitype = vtiger_ws_fieldtype.uitype') */
+		/* 	->innerJoin('vtiger_ws_referencetype', 'vtiger_ws_fieldtype.fieldtypeid = vtiger_ws_referencetype.fieldtypeid'); */
+		/* $querySecond = (new App\Db\Query())->select(['fieldname', 'tabid', 'typeofdata', 'reference_module' => 'relmodule']) */
+		/* 	->from('vtiger_field') */
+		/* 	->innerJoin('vtiger_fieldmodulerel', 'vtiger_field.fieldid = vtiger_fieldmodulerel.fieldid'); */
+		/* $dataReader = $query->union($querySecond)->createCommand()->query(); */
+		/* $dependentFields = []; */
+		/* // List of modules which will not be supported by 'Create Entity' workflow task */
+		/* $filterModules = ['Calendar', 'Events', 'Accounts']; */
+		/* $skipFieldsList = []; */
+		/* while ($row = $dataReader->read()) { */
+		/* 	$fieldName = $row['fieldname']; */
+		/* 	$tabModuleName = \App\Module::getModuleName($row['tabid']); */
+		/* 	if (in_array($tabModuleName, $filterModules)) */
+		/* 		continue; */
+		/* 	if ($row['reference_module'] == $moduleName && $tabModuleName != $moduleName) { */
+		/* 		if (!\App\Module::isModuleActive($tabModuleName)) */
+		/* 			continue; */
+		/* 		$dependentFields[$tabModuleName] = ['fieldname' => $fieldName, 'modulelabel' => \App\Language::translate($tabModuleName, $tabModuleName)]; */
+		/* 	} else { */
+		/* 		$dataTypeInfo = explode('~', $row['typeofdata']); */
+		/* 		if ($dataTypeInfo[1] === 'M') { // If the current reference field is mandatory */
+		/* 			$skipFieldsList[$tabModuleName] = array('fieldname' => $fieldName); */
+		/* 		} */
+		/* 	} */
+		/* } */
+		/* foreach ($skipFieldsList as $tabModuleName => $fieldInfo) { */
+		/* 	$dependentFieldInfo = $dependentFields[$tabModuleName]; */
+		/* 	if ($dependentFieldInfo['fieldname'] != $fieldInfo['fieldname']) { */
+		/* 		unset($dependentFields[$tabModuleName]); */
+		/* 	} */
+		/* } */
 
-		return $dependentFields;
+		/* return $dependentFields; */
 	}
 
 	/**
