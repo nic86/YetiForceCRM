@@ -318,8 +318,12 @@ class OSSMailView extends CRMEntity
 			$adb->pquery("INSERT INTO vtiger_ossmails_logs (`action`, `info`, `user`) VALUES (?, ?, ?);", array('Action_InstallModule', $moduleName . ' ' . $Module->version, $user_id), false);
 		} else if ($eventType == 'module.disabled') {
 			$registerLink = false;
+			$moduleInstance = vtlib\Module::getInstance('Home');
+			$moduleInstance->deleteLink('DASHBOARDWIDGET', 'Email da Archiviare', 'index.php?module=OSSMailView&view=ShowWidget&name=EmailsArchived');
 		} else if ($eventType == 'module.enabled') {
 			$registerLink = true;
+			$moduleInstance = vtlib\Module::getInstance('Home');
+			$moduleInstance->addLink('DASHBOARDWIDGET', 'Email da Archiviare', 'index.php?module=OSSMailView&view=ShowWidget&name=EmailsArchived');
 		} else if ($eventType == 'module.preuninstall') {
 			
 		} else if ($eventType == 'module.preupdate') {

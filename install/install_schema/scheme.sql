@@ -6745,6 +6745,7 @@ CREATE TABLE `vtiger_ossmailview` (
   `verify` smallint(1) DEFAULT '0',
   `rel_mod` varchar(128) DEFAULT NULL,
   `date` datetime DEFAULT NULL,
+  `emailarchived` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`ossmailviewid`),
   KEY `id` (`id`),
   KEY `verify` (`verify`),
