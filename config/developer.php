@@ -8,9 +8,9 @@ $DEVELOPER_CONFIG = [
 	// Enable minimize CSS files
 	'MINIMIZE_CSS' => true,
 	// Change of fields visibility
-	'CHANGE_VISIBILITY' => false,
+	'CHANGE_VISIBILITY' => true,
 	// Adding/Deleting relations between modules.
-	'CHANGE_RELATIONS' => false,
+	'CHANGE_RELATIONS' => true,
 	// Developer libraries update mode 
 	'MISSING_LIBRARY_DEV_MODE' => false,
 ];

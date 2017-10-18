@@ -9,4 +9,17 @@
  * All Rights Reserved.
  *************************************************************************************************************************************/
 -->*}
-{$CONTENT}
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <style>
+        p{
+            margin: 0
+        }
+    </style>
+    </head>
+    <body data-skinpath="{$SKIN_PATH}" data-language="{$LANGUAGE}">
+        {$CONTENT}
+    </body>
+</html>

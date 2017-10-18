@@ -37,14 +37,16 @@ Class OSSMailView_mbody_View extends Vtiger_Index_View
 
 	public function process(Vtiger_Request $request)
 	{
+		if (class_exists('CSRF')) {
+			CSRF::$frameBreaker = false;
+			CSRF::$rewriteJs = null;
+		}
 		$moduleName = $request->getModule();
 		$record = $request->get('record');
 		$recordModel = Vtiger_Record_Model::getInstanceById($record, $moduleName);
-		$content = $recordModel->get('content');
-
 		$viewer = $this->getViewer($request);
 		$viewer->assign('MODULENAME', $moduleName);
-		$viewer->assign('CONTENT', vtlib\Functions::getHtmlOrPlainText($content));
+		$viewer->assign('CONTENT', vtlib\Functions::getHtmlOrPlainText($recordModel->getDisplayValue('content')));
 		$viewer->assign('RECORD', $record);
 		$viewer->view('mbody.tpl', 'OSSMailView');
 	}

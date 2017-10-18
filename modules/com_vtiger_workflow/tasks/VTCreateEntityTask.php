@@ -30,6 +30,9 @@ class VTCreateEntityTask extends VTTask
 		$moduleName = $recordModel->getModuleName();
 		$recordId = $recordModel->getId();
 		$entityType = $this->entity_type;
+		if ($entityType == 'Events') {
+			$entityType = 'Calendar';
+		}
 		if (!\App\Module::isModuleActive($entityType)) {
 			return;
 		}
