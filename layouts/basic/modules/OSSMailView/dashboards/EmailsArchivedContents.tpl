@@ -28,7 +28,7 @@
 			{foreach from=$EMAILS key=RECORD_ID item=EMAIL_MODEL}
 				<div class="col-xs-12 paddingLRZero">
 					<div class="col-xs-2">
-							{$EMAIL_MODEL['subject']}
+                        {$EMAIL_MODEL['subject']}
 					</div>
 					<div class="col-xs-2">
 						{$EMAIL_MODEL['from_email']}
@@ -42,27 +42,18 @@
 						</span>
 					</div>
                     <div class="col-xs-2">
-                        <div class ="row">
-                            <input type="hidden" value="" id="tempField{$EMAIL_MODEL['crmid']}" name="tempField{$EMAIL_MODEL['crmid']}"/>
-                            <select class="btn btn-xs btn-default" id="tempSelect{$EMAIL_MODEL['crmid']}" name="tempSelect{$EMAIL_MODEL['crmid']}">
-                                {foreach item="ITEM" from=$LINKS}
-                                    <option value="{$ITEM->get('modulename')}">
-                                        {vtranslate($ITEM->get('modulename'), $MODULE_NAME)}
-                                    </option>
-                                {/foreach}
-                            </select>
-                        </div>
-                        <div class ="row">
-                            <div class ="col-xs-4">
-                                <a class="btn btn-xs btn-default pull-left" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.selectRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-search'  style='vertical-align: middle;' border='0' title="Relaziona" alt="Relaziona"></span></a>
-                            </div>
-                            <div class ="col-xs-4">
-                                <a class="btn btn-xs btn-default pull-left" style='vertical-align: middle;' target="_blank" href="index.php?module=OSSMailView&view=Detail&record={$RECORD_ID}"><span class='glyphicon glyphicon-link'  style='vertical-align: middle;' border='0' title="Apri" alt="Apri"></span></a>
-                            </div>
-                            <div class ="col-xs-4">
-                                <a class="btn btn-xs btn-default pull-left" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.setHasRelated('{$RECORD_ID}');"><span class='glyphicon glyphicon-ok'  style='vertical-align: middle;' border='0' title="Salta" alt="Salta"></span></a>
-                            </div>
-                        </div>
+                        <input type="hidden" value="" id="tempField{$EMAIL_MODEL['crmid']}" name="tempField{$EMAIL_MODEL['crmid']}"/>
+                        <select class="btn btn-xs btn-default" id="tempSelect{$EMAIL_MODEL['crmid']}" name="tempSelect{$EMAIL_MODEL['crmid']}">
+                            {foreach item="ITEM" from=$LINKS}
+                                <option value="{$ITEM->get('modulename')}">
+                                    {vtranslate($ITEM->get('modulename'), $MODULE_NAME)}
+                                </option>
+                            {/foreach}
+                        </select>
+                        <a class="btn btn-xs btn-default" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.addRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-plus'  style='vertical-align: middle;' border='0' title="Aggiungi" alt="Aggiungi"></span></a>
+                        <a class="btn btn-xs btn-default" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.selectRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-search'  style='vertical-align: middle;' border='0' title="Relaziona" alt="Relaziona"></span></a>
+                        <a class="btn btn-xs btn-default" style='vertical-align: middle;' target="_blank" href="index.php?module=OSSMailView&view=Detail&record={$RECORD_ID}"><span class='glyphicon glyphicon-link'  style='vertical-align: middle;' border='0' title="Apri" alt="Apri"></span></a>
+                        <a class="btn btn-xs btn-default" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.setHasRelated('{$RECORD_ID}');"><span class='glyphicon glyphicon-ok'  style='vertical-align: middle;' border='0' title="Salta" alt="Salta"></span></a>
 					</div>
 				</div>
 			{/foreach}

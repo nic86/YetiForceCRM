@@ -33,6 +33,49 @@ var OSSMailView_Widget_Js = {
 		});
 		return aDeferred.promise();
 	},
+    addRecord: function(id) {
+        var module = jQuery('select[name="tempSelect' + id + '"]').find('option:selected').val();
+        this.showQuickCreateForm(module, id);
+    },
+    showQuickCreateForm: function(moduleName, record, params) {
+        var content = $('#ytActionBarContent');
+        if (params == undefined) {
+            var params = {};
+        }
+        var relatedParams = {};
+        if (params['sourceModule']) {
+            var sourceModule = params['sourceModule'];
+        } else {
+            var sourceModule = 'OSSMailView';
+        }
+        var postShown = function (data) {
+            var index, queryParam, queryParamComponents;
+            $('<input type="hidden" name="sourceModule" value="' + sourceModule + '" />').appendTo(data);
+            $('<input type="hidden" name="sourceRecord" value="' + record + '" />').appendTo(data);
+            $('<input type="hidden" name="relationOperation" value="true" />').appendTo(data);
+        }
+
+        // Aggiungere valori all'array relatedParams per mappare i valori in creazione su nuovo modulo
+        // var subject = jQuery('div[name="rowsubject' + record + '"]').text();
+        // relatedParams['arcmailoggetto'] = subject;
+
+        var postQuickCreate = function (data) {
+            var wContainer = jQuery('li[data-name="EmailsArchived"]');
+            wContainer.find('a[name="drefresh"]').trigger('click');
+        }
+
+        relatedParams['sourceModule'] = sourceModule;
+        relatedParams['sourceRecord'] = record;
+        relatedParams['relationOperation'] = true;
+        var quickCreateParams = {
+            callbackFunction: postQuickCreate,
+            callbackPostShown: postShown,
+            data: relatedParams,
+            noCache: true
+        };
+        var headerInstance = new Vtiger_Header_Js();
+        headerInstance.quickCreateModule(moduleName, quickCreateParams);
+    },
    selectRecord: function(id) {
         var sourceFieldElement = jQuery('input[name="tempField' + id  + '"]');
         var relParams = {
