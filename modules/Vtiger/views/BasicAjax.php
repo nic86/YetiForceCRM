@@ -128,10 +128,7 @@ class Vtiger_BasicAjax_View extends Vtiger_Basic_View
 			$searchKey = $request->get('value');
 			$limit = $request->get('limit') != 'false' ? $request->get('limit') : false;
 			$operator = (!$request->isEmpty('operator') ) ? $request->get('operator') : false;
-			$searchModule = false;
-			if ($request->get('searchModule')) {
-				$searchModule = $request->get('searchModule');
-			}
+			$searchModule = (!$request->isEmpty('searchModule') ) ? $request->get('searchModule') : false;
 			$viewer->assign('SEARCH_KEY', $searchKey);
 			$viewer->assign('SEARCH_MODULE', $searchModule);
 			$matchingRecords = Vtiger_Record_Model::getSearchResult($searchKey, $searchModule, $limit, $operator);
