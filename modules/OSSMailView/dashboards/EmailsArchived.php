@@ -1,8 +1,8 @@
 <?php
 
 /**
- * Wdiget to show new accounts
- * @package YetiForce.Dashboard
+ * Wdiget to show email not related
+ *  * @package YetiForce.Dashboard
  * @license licenses/License.html
  * @author Tomasz Kur <t.kur@yetiforce.com>
  */
@@ -11,12 +11,12 @@ class OSSMailView_EmailsArchived_Dashboard extends Vtiger_IndexAjax_View
 
 	private function getEmailNotArchived($moduleName, $user, $pagingModel)
 	{
-		$query = (new \App\Db\Query())->select(['vtiger_crmentity.crmid','vtiger_ossmailview.subject','vtiger_ossmailview.from_email','vtiger_ossmailview.to_email','vtiger_ossmailview.date'])
+		$query = (new \App\Db\Query())->select(['vtiger_crmentity.crmid'])
 			->from('vtiger_ossmailview')
 			->innerJoin('vtiger_crmentity', 'vtiger_ossmailview.ossmailviewid=vtiger_crmentity.crmid')
 			->where(['vtiger_crmentity.setype' => $moduleName])
 			->andWhere(['vtiger_crmentity.deleted' => '0'])
-			->andWhere(['vtiger_ossmailview.emailarchived' => '0']);
+			->andWhere(['vtiger_ossmailview.emailarchiviata' => '0']);
 
 		if (is_array($user)) {
 			$query->andWhere(['in','vtiger_crmentity.smownerid', $user]);
@@ -35,8 +35,8 @@ class OSSMailView_EmailsArchived_Dashboard extends Vtiger_IndexAjax_View
 		$rows = $query->all();
 		$emails = [];
 		foreach ($rows as $row) {
-			$row['userModel'] = Users_Privileges_Model::getInstanceById($row['smownerid']);
-			$emails[$row['crmid']] = $row;
+			$recordModel = Vtiger_Record_Model::getInstanceById($row['crmid']);
+			$emails[$row['crmid']] = $recordModel;
 		}
 		return $emails;
 	}
