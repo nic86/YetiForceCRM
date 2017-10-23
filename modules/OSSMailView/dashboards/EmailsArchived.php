@@ -16,7 +16,7 @@ class OSSMailView_EmailsArchived_Dashboard extends Vtiger_IndexAjax_View
 			->innerJoin('vtiger_crmentity', 'vtiger_ossmailview.ossmailviewid=vtiger_crmentity.crmid')
 			->where(['vtiger_crmentity.setype' => $moduleName])
 			->andWhere(['vtiger_crmentity.deleted' => '0'])
-			->andWhere(['vtiger_ossmailview.emailarchiviata' => '0']);
+			->andWhere(['vtiger_ossmailview.emailarchived' => '0']);
 
 		if (is_array($user)) {
 			$query->andWhere(['in','vtiger_crmentity.smownerid', $user]);

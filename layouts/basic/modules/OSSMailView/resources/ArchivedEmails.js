@@ -38,7 +38,6 @@ var OSSMailView_Widget_Js = {
         this.showQuickCreateForm(module, id);
     },
     showQuickCreateForm: function(moduleName, record, params) {
-        var content = $('#ytActionBarContent');
         if (params == undefined) {
             var params = {};
         }
