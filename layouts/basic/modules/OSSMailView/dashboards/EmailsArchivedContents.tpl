@@ -50,9 +50,10 @@
                                     </option>
                                 {/foreach}
                             </select>
-<a class="btn btn-xs btn-default " style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.addRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-plus'  style='vertical-align: middle;' border='0' title="Aggiungi" alt="Aggiungi"></span></a>
-                                <a class="btn btn-xs btn-default " style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.selectRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-search'  style='vertical-align: middle;' border='0' title="Relaziona" alt="Relaziona"></span></a>
-                                <a class="btn btn-xs btn-default " style='vertical-align: middle;' target="_blank" href="index.php?module=OSSMailView&view=Detail&record={$RECORD_ID}"><span class='glyphicon glyphicon-link'  style='vertical-align: middle;' border='0' title="Apri" alt="Apri"></span></a>
+                                <a class="btn btn-xs btn-default" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.addRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-plus'  style='vertical-align: middle;' border='0' title="Aggiungi" alt="Aggiungi"></span></a>
+                                <a class="btn btn-xs btn-default" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.selectRecord('{$RECORD_ID}');"><span class='glyphicon glyphicon-search'  style='vertical-align: middle;' border='0' title="Relaziona" alt="Relaziona"></span></a>
+                                <a class="btn btn-xs btn-default" style='vertical-align: middle;' target="_blank" href="index.php?module=OSSMailView&view=Detail&record={$RECORD_ID}"><span class='glyphicon glyphicon-link'  style='vertical-align: middle;' border='0' title="Apri" alt="Apri"></span></a>
+                                <a class="btn btn-xs btn-default" style='vertical-align: middle;' onclick="OSSMailView_Widget_Js.setHasRelated('{$RECORD_ID}');"><span class='glyphicon glyphicon-ok'  style='vertical-align: middle;' border='0' title="Salta" alt="Salta"></span></a>
 					</div>
 				</div>
 			{/foreach}
