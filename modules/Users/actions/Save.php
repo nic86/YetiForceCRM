@@ -10,30 +10,25 @@
 
 class Users_Save_Action extends Vtiger_Save_Action
 {
-
 	public function checkPermission(Vtiger_Request $request)
 	{
 		$moduleName = $request->getModule();
-		$record = (int) $request->get('record');
-		$recordModel = $this->record ? $this->record : Vtiger_Record_Model::getInstanceById($record, $moduleName);
-		$currentUserModel = Users_Record_Model::getCurrentUserModel();
-
-		// Check for operation access.
-		$allowed = Users_Privileges_Model::isPermitted($moduleName, 'Save', $record);
-
-		if ($allowed) {
-			// Deny access if not administrator or account-owner or self
-			if (!$currentUserModel->isAdminUser()) {
-				if (empty($record)) {
-					$allowed = false;
-				} else if ((int) $currentUserModel->get('id') !== $recordModel->getId()) {
-					$allowed = false;
-				}
+		if (!$request->isEmpty('record')) {
+			$record = $request->get('record');
+			$this->record = Vtiger_Record_Model::getInstanceById($record, $moduleName);
+			$currentUserModel = Users_Record_Model::getCurrentUserModel();
+			$allowed = \App\Privilege::isPermitted($moduleName, 'Save', $record);
+			if ($allowed && !$currentUserModel->isAdminUser() && AppConfig::security('SHOW_MY_PREFERENCES') && ((int) $currentUserModel->get('id') !== $this->record->getId())) {
+				$allowed = false;
 			}
-		}
-
-		if (!$allowed) {
-			throw new \Exception\AppException('LBL_PERMISSION_DENIED');
+			if (!$allowed) {
+				throw new \Exception\AppException('LBL_PERMISSION_DENIED');
+			}
+		} else {
+			$this->record = Vtiger_Record_Model::getCleanInstance($moduleName);
+			if (!$this->record->isCreateable()) {
+				throw new \Exception\AppException('LBL_PERMISSION_DENIED');
+			}
 		}
 	}
 
