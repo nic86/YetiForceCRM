@@ -46,7 +46,7 @@
                             <select class="btn btn-xs btn-default" id="tempSelect{$RECORD_ID}" name="tempSelect{$RECORD_ID}">
                                 {foreach item="ITEM" from=$LINKS}
                                     <option value="{$ITEM->get('modulename')}">
-                                        {vtranslate($ITEM->get('modulename'), $MODULE_NAME)}
+                                        {vtranslate($ITEM->get('modulename'), $ITEM->get('modulename'))}
                                     </option>
                                 {/foreach}
                             </select>
