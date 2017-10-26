@@ -6734,6 +6734,7 @@ CREATE TABLE `vtiger_ossmailview` (
   `id` int(19) DEFAULT NULL,
   `mbox` varchar(100) DEFAULT NULL,
   `uid` varchar(150) DEFAULT NULL,
+  `cid` char(40) DEFAULT NULL,
   `reply_to_email` text,
   `ossmailview_sendtype` varchar(30) DEFAULT NULL,
   `attachments_exist` smallint(1) DEFAULT '0',
@@ -6751,6 +6752,7 @@ CREATE TABLE `vtiger_ossmailview` (
   KEY `verify` (`verify`),
   KEY `message_id` (`uid`,`rc_user`),
   KEY `mbox` (`mbox`),
+  KEY `ossmailview_cid_idx` (`cid`),
   CONSTRAINT `fk_1_vtiger_ossmailview` FOREIGN KEY (`ossmailviewid`) REFERENCES `vtiger_crmentity` (`crmid`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
