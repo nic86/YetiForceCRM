@@ -191,7 +191,7 @@ jQuery.Class("Vtiger_Edit_Js", {
 			this.getRecordDetails(params).then(function (data) {
 				var response = params.data = data['result']['data'];
 				$.each(mappingRelatedField, function (key, value) {
-					if (response[value[0]] != 0 && !thisInstance.getMappingValuesFromUrl(key)) {
+					if (response[value[0]] != undefined && !thisInstance.getMappingValuesFromUrl(key)) {
 						var mapFieldElement = formElement.find('[name="' + key + '"]');
 						if (mapFieldElement.is('select')) {
 							if (mapFieldElement.find('option[value="' + response[value[0]] + '"]').length) {
@@ -199,6 +199,9 @@ jQuery.Class("Vtiger_Edit_Js", {
 							}
 						} else if (mapFieldElement.length == 0) {
 							$("<input type='hidden'/>").attr("name", key).attr("value", response[value[0]]).appendTo(formElement);
+                        } else if (mapFieldElement.length > 1) {
+                            mapFieldElement.val(response[value[0]]);
+                            $(mapFieldElement[1]).prop("checked", response[value[0]] == '1');
 						} else if (mapFieldElement.hasClass('dateField')) {
 							var dateFormat = mapFieldElement.data("dateFormat");
 							var startDateInstance = Date.parse(response[value[0]]);
