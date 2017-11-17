@@ -5994,3 +5994,6 @@ select.form-control {
 .slimScrollBar{
 	right: -7px !important;
 }
+select[readonly], select[disabled]{
+    pointer-events: none;
+}
