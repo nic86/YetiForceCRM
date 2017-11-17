@@ -128,7 +128,7 @@ class Vtiger_Base_UIType extends Vtiger_Base_Model
 	 */
 	public function getRelatedListDisplayValue($value)
 	{
-		return $this->getDisplayValue($value);
+		return $this->getListViewDisplayValue($value);
 	}
 
 	public function getListSearchTemplateName()
