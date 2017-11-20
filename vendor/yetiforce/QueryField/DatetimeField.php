@@ -82,6 +82,17 @@ class DatetimeField extends DateField
 	}
 
 	/**
+	 * Webservice After operator
+	 * @return array
+	 */
+	public function operatorAws()
+	{
+		$val = getValidDBInsertDateTimeValue($this->value);
+		return ['>', $this->getColumnName(), $val];
+	}
+
+
+	/**
 	 * Get value
 	 * @return mixed
 	 */

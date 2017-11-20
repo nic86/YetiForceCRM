@@ -9,8 +9,7 @@ namespace Api\Core;
  */
 class Response
 {
-
-	protected static $acceptableHeaders = ['X-API-KEY', 'X-ENCRYPTED', 'X-TOKEN'];
+	protected static $acceptableHeaders = ['X-API-KEY', 'X-ENCRYPTED', 'X-TOKEN','X-FIELDS','X-ROW-LIMIT','X-ROW-OFFSET','X-CONDITION','X-RAW-DATA'];
 	static protected $instance = false;
 	protected $body;
 	protected $headers = [];
