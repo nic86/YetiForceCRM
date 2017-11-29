@@ -79,7 +79,7 @@
 						<td class="{$WIDTHTYPE}" data-field-type="{$HEADER_FIELD->getFieldDataType()}" nowrap  {if $smarty.foreach.listHeaderForeach.iteration eq $RELATED_HEADER_COUNT}colspan="2"{/if}>
 							{if $HEADER_FIELD->isNameField() eq true or $HEADER_FIELD->get('uitype') eq '4'}
 								<a class="moduleColor_{$RELATED_MODULE_NAME}" title="" href="{$RELATED_RECORD->getDetailViewUrl()}">
-									{$RELATED_RECORD->getDisplayValue($RELATED_HEADERNAME)|truncate:50}
+									{$RELATED_RECORD->getListViewDisplayValue($RELATED_HEADERNAME)}
 								</a>
 							{elseif $HEADER_FIELD->get('fromOutsideList') eq true}
 								{$HEADER_FIELD->getDisplayValue($RELATED_RECORD->get($RELATED_HEADERNAME))}
