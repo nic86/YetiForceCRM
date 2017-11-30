@@ -136,6 +136,24 @@ class DateField extends BaseField
 	}
 
 	/**
+	 * Greater operator
+	 * @return array
+	 */
+	public function operatorG()
+	{
+		return ['>', $this->getColumnName(), $this->getValue()];
+	}
+
+	/**
+	 * Lower operator
+	 * @return array
+	 */
+	public function operatorL()
+	{
+		return ['<', $this->getColumnName(), $this->getValue()];
+	}
+
+	/**
 	 * DashBoard Calendar widget listview operator
 	 * @return array
 	 */
