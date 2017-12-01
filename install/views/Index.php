@@ -31,8 +31,8 @@ class Install_Index_view extends Vtiger_View_Controller
 
 			$lang = substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
 
-			if ('pl' === $lang) {
-				$request->set('lang', 'pl_pl');
+			if ('it' === $lang) {
+				$request->set('lang', 'it_it');
 			} else {
 				$request->set('lang', 'en_us');
 			}

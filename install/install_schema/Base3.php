@@ -2976,11 +2976,7 @@ class Base3 extends \App\Db\Importers\Base
 				'columns' => ['id', 'name', 'prefix', 'label', 'lastupdated', 'sequence', 'isdefault', 'active'],
 				'values' => [
 					[1, 'English', 'en_us', 'US English', '2014-07-16 11:20:12', NULL, 1, 1],
-					[2, 'Język Polski', 'pl_pl', 'Język Polski', '2014-07-16 11:20:40', NULL, 0, 1],
-					[3, 'Deutsch', 'de_de', 'DE Deutsch', '2014-11-21 11:20:40', NULL, 0, 1],
-					[5, 'Russian', 'ru_ru', 'Russian', '2015-01-13 15:12:39', NULL, 0, 1],
-					[6, 'French', 'fr_fr', 'French', '2016-04-29 12:20:00', NULL, 0, 1],
-					[7, 'Spanish', 'es_es', 'ES Spanish', '2017-03-11 12:20:00', NULL, 0, 1],
+					[2, 'Italiano', 'it_it', 'IT Italiano', '2014-07-16 11:20:40', NULL, 0, 1],
 				]
 			],
 			'vtiger_language_seq' => [
